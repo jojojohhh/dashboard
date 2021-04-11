@@ -1,10 +1,13 @@
 spring:
   thymeleaf:
-    prefix: classpath:templates/**
+    mode: HTML
+    encoding: UTF-8
+    check-template-location: true
+    prefix: classpath:/templates/
     suffix: .html
     cache: false
   mvc:
-    static-path-pattern: classpath:static/**
+    static-path-pattern: /static/**
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     show-sql: false
@@ -25,6 +28,9 @@ spring:
     user:
       name: admin
       password: admin
+      roles:
+        - ADMIN
+        - USER
 
 server:
   port: 8888

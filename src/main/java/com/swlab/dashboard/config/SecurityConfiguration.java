@@ -21,7 +21,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 
     public void configure(WebSecurity security) throws Exception {
-        security.ignoring().antMatchers("/css/**", "/js/**", "/img/**");
+        security.ignoring().antMatchers("/static/**");
     }
 
     @Bean
@@ -51,8 +51,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/home/**").authenticated()
                 .antMatchers("/login*").permitAll()
+                .antMatchers("/home/**").access("hasRole('USER')")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
