@@ -12,4 +12,10 @@ public class LoginController {
     public String getLogin() {
         return "login";
     }
+
+
+    @GetMapping("/join")
+    public String getJoin() {
+        return "join";
+    }
 }
