@@ -1,4 +1,4 @@
-package com.swlab.dashboard.config;
+package com.swlab.dashboard.config.security.handler;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
