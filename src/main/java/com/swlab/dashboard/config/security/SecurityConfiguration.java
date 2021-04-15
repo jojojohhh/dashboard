@@ -2,8 +2,12 @@ package com.swlab.dashboard.config.security;
 
 import com.swlab.dashboard.config.security.handler.AuthFailureHandler;
 import com.swlab.dashboard.config.security.handler.CustomLogoutSuccessHandler;
+import com.swlab.dashboard.model.user.SecurityUser;
+import com.swlab.dashboard.service.SecurityUserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -14,13 +18,19 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private AuthFailureHandler authFailureHandler;
+    private final SecurityUserService securityUserService;
 
+    @Autowired
+    public SecurityConfiguration(SecurityUserService securityUserService) {
+        this.securityUserService = securityUserService;
+    }
 
     public void configure(WebSecurity security) throws Exception {
         security.ignoring().antMatchers("/static/**");
@@ -66,13 +76,34 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .loginPage("/login")
                     .loginProcessingUrl("/login")
                     .defaultSuccessUrl("/home", true)
+                    .usernameParameter("email").passwordParameter("password")
                     .failureUrl("/login?error=true")
                     .failureHandler(authenticationFailureHandler())
                 .and()
                     .logout()
                     .logoutUrl("/logout")
                     .deleteCookies("JSESSIONID")
-                    .logoutSuccessHandler(logoutSuccessHandler());
+                    .logoutSuccessHandler(logoutSuccessHandler())
+                .and()
+                    .csrf().requireCsrfProtectionMatcher(new AntPathRequestMatcher("!/h2-console/**"))
+                .and()
+                    .authenticationProvider(authenticationProvider()).csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
+
         http.headers().frameOptions().disable();
+    }
+
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setUserDetailsService(securityUserService);
+        provider.setPasswordEncoder(passwordEncoder());
+        return provider;
+    }
+
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.inMemoryAuthentication()
+                    .withUser("user").password("user").roles("USER")
+                .and()
+                    .withUser("admin").password("admin").roles("ADMIN");
     }
 }
