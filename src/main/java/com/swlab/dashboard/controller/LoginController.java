@@ -3,11 +3,9 @@ package com.swlab.dashboard.controller;
 import com.swlab.dashboard.dto.UserDto;
 import com.swlab.dashboard.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +14,7 @@ import java.util.Map;
 @Controller
 public class LoginController {
 
-    private UserService userService;
+    private final UserService userService;
 
     @GetMapping(value = {"", "/login"})
     public String getLogin() {
@@ -30,7 +28,7 @@ public class LoginController {
     }
 
     @ResponseBody
-    @PostMapping("/join")
+    @PostMapping(path = "/join", consumes = {MediaType.APPLICATION_JSON_VALUE})
     public Map<String, Object> postJoin(@RequestBody UserDto userDto) {
         Map<String, Object> res = new HashMap<>();
 
@@ -38,6 +36,7 @@ public class LoginController {
             res.put("duplicate", true);
             return res;
         }
+
         res.put("success", userService.join(userDto) != null ? true : false);
         return res;
     }

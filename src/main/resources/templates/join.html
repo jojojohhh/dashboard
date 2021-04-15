@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/index.css}" />
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+            <div class="card card-signup my-5">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Sign Up</h5>
+                    <form class="form-signup" method="post" th:action="@{/join}">
+                        <div class="form-label-group">
+                            <input type="email" id="inputEmail" class="form-control" placeholder="Email address" name="email" required autofocus>
+                            <span class="input-email-exist">이메일이 이미 존재합니다.</span>
+                            <label for="inputEmail">Email address</label>
+                        </div>
+
+                        <div class="form-label-group">
+                            <input type="password" id="inputPassword" class="form-control" placeholder="Password" name="password" required>
+                            <label for="inputPassword">Password</label>
+                        </div>
+
+                        <div class="form-label-group">
+                            <input type="text" id="inputName" class="form-control" placeholder="Name" name="name" required>
+                            <label for="inputName">Name</label>
+                        </div>
+
+                        <div class="form-label-group">
+                            <input type="text" id="inputPhoneNo" class="form-control" placeholder="PhoneNo" name="phoneNo" required>
+                            <label for="inputPhoneNo">PhoneNo</label>
+                        </div>
+                        <button class="btn btn-lg btn-primary btn-signup btn-block text-uppercase" type="submit">Sign Up</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{/static/js/join.js}"></script>
+<script>
+    $.fn.serializeObject = function () {
+        let obj = null;
+        try {
+            if (this[0].tagName && this[0].tagName.toUpperCase() == "FORM") {
+                const arr = this.serializeArray();
+                if (arr) {
+                    obj = {};
+                    jQuery.each(arr, function () {
+                        obj[this.name] = this.value;
+                    });
+                }
+            }
+        } catch (e) {
+            alert(e.message);
+        } finally {
+
+        }
+        return obj;
+    }
+
+    $(function () {
+        $("form").on("submit", function (e) {
+            console.log("submit");
+            e.preventDefault();
+            const $form = $(this).closest("form");
+            const formData = $form.serializeObject();
+
+            $.ajax({
+                type : $form.attr("method"),
+                dataType : "json",
+                contentType : "application/json",
+                data : JSON.stringify(formData),
+                url : $form.attr("action"),
+                success : function (res) {
+                    if (res.duplicate) {
+                        $(".input-email-exist").css("display", "inline-block");
+                        $("input[name='email']").val("");
+                        $("input[name='email']").focus();
+                    } else if (res.success) {
+                        setTimeout(function () {
+                            window.location = document.referrer
+                        }, 800);
+                    }
+                }
+            })
+        })
+    })
+</script>
+</body>
+</html>
