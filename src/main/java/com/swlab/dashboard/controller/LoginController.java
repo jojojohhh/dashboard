@@ -1,9 +1,12 @@
 package com.swlab.dashboard.controller;
 
 import com.swlab.dashboard.dto.UserDto;
+import com.swlab.dashboard.model.user.SecurityUser;
+import com.swlab.dashboard.model.user.UserRole;
 import com.swlab.dashboard.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +20,10 @@ public class LoginController {
     private final UserService userService;
 
     @GetMapping(value = {"", "/login"})
-    public String getLogin() {
+    public String getLogin(@AuthenticationPrincipal SecurityUser user) {
+        if (user != null && user.getRoleType().contains(UserRole.RoleType.USER)) {
+            return "redirect:/home";
+        }
         return "login";
     }
 

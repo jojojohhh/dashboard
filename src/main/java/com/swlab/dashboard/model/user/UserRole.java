@@ -1,12 +1,14 @@
 package com.swlab.dashboard.model.user;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.swlab.dashboard.model.BaseEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 
@@ -15,7 +17,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "user_role", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "role_name"})})
 @DynamicUpdate
-public class UserRole extends BaseEntity {
+public class UserRole extends BaseEntity implements GrantedAuthority {
 
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
@@ -25,6 +27,12 @@ public class UserRole extends BaseEntity {
     @Column(name = "role_name", nullable = false, length = 20)
     @Enumerated(EnumType.STRING)
     private RoleType roleType;
+
+    @JsonIgnore
+    @Override
+    public String getAuthority() {
+        return this.roleType.name();
+    }
 
     public enum RoleType {
         USER, ADMIN
