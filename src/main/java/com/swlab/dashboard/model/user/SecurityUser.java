@@ -18,6 +18,7 @@ public class SecurityUser extends User implements UserDetails {
         super();
         setId(user.getId());
         setEmail(user.getEmail());
+        setPassword(user.getPassword());
         setName(user.getName());
         setPhoneNo(user.getPhoneNo());
         setDel(user.isDel());

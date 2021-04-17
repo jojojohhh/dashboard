@@ -27,7 +27,7 @@ public class SecurityUserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Optional<User> user = userRepository.findWithUserRolesByEmailAndIsDel(email, false);
+        Optional<User> user = userRepository.findWithUserRolesByEmailAndDel(email, false);
         if (!user.isPresent()) {
             logger.info("존재하지 않는 이메일 입니다. : " + email);
             throw new UsernameNotFoundException(email);

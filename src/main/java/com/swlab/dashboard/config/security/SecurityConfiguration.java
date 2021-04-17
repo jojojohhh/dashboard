@@ -3,19 +3,26 @@ package com.swlab.dashboard.config.security;
 import com.swlab.dashboard.config.security.handler.AuthFailureHandler;
 import com.swlab.dashboard.config.security.handler.CustomLogoutSuccessHandler;
 import com.swlab.dashboard.model.user.SecurityUser;
+import com.swlab.dashboard.model.user.User;
+import com.swlab.dashboard.repository.UserRepository;
 import com.swlab.dashboard.service.SecurityUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configurers.provisioning.InMemoryUserDetailsManagerConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
@@ -88,7 +95,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .csrf().requireCsrfProtectionMatcher(new AntPathRequestMatcher("!/h2-console/**"))
                 .and()
                     .authenticationProvider(authenticationProvider()).csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
-
         http.headers().frameOptions().disable();
     }
 
@@ -100,10 +106,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return provider;
     }
 
+    @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
-                    .withUser("user").password("user").roles("USER")
+                    .withUser("user").password(passwordEncoder().encode("user")).roles("USER")
                 .and()
-                    .withUser("admin").password("admin").roles("ADMIN");
+                    .withUser("admin").password(passwordEncoder().encode("user")).roles("ADMIN");
     }
 }
