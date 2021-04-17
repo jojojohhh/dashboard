@@ -3,6 +3,7 @@
 
 ## 할 일
   1. Spring Security5를 이용한 로그인 처리
+      - _csrf.token 적용
   3. ~로그인 form 만들기~
   4. 회원가입 기능 추가
       - 회원가입 form에서 post요청시 Controller에서 받는 데이터의 ```content-type: 'application/x-www-form-urlencoded;set-UTF-8'```
