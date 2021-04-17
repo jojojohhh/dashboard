@@ -22,7 +22,7 @@ public class BaseEntity {
     private Date createTimeStamp;
 
     @Column(nullable = false, columnDefinition = "TINYINT(1) DEFAULT 0", length = 1)
-    private boolean isDel;
+    private boolean del;
 
     @PrePersist
     protected void onCreate() {

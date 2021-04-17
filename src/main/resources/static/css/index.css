@@ -128,13 +128,17 @@ body {
 }
 
 .btn-google {
-    color: white;
-    background-color: #ea4335;
-}
-
-.btn-facebook {
-    color: white;
-    background-color: #3b5998;
+    border-color: black;
+    color: black;
+    background-color: white;
+    margin-top: .5rem;
+    width: 100%;
+    font-size: 80%;
+    border-radius: 5rem;
+    letter-spacing: .1rem;
+    font-weight: bold;
+    padding: 1rem;
+    transition: all 0.2s;
 }
 
 /* Fallback for Edge
