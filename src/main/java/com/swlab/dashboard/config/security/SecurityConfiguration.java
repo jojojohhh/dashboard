@@ -2,27 +2,19 @@ package com.swlab.dashboard.config.security;
 
 import com.swlab.dashboard.config.security.handler.AuthFailureHandler;
 import com.swlab.dashboard.config.security.handler.CustomLogoutSuccessHandler;
-import com.swlab.dashboard.model.user.SecurityUser;
-import com.swlab.dashboard.model.user.User;
-import com.swlab.dashboard.repository.UserRepository;
+import com.swlab.dashboard.config.security.handler.WebAccessDeniedHandler;
 import com.swlab.dashboard.service.SecurityUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.authentication.configurers.provisioning.InMemoryUserDetailsManagerConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
@@ -32,10 +24,12 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+    private final WebAccessDeniedHandler webAccessDeniedHandler;
     private final SecurityUserService securityUserService;
 
     @Autowired
-    public SecurityConfiguration(SecurityUserService securityUserService) {
+    public SecurityConfiguration(WebAccessDeniedHandler webAccessDeniedHandler, SecurityUserService securityUserService) {
+        this.webAccessDeniedHandler = webAccessDeniedHandler;
         this.securityUserService = securityUserService;
     }
 
@@ -75,22 +69,24 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                     .authorizeRequests()
+                    .antMatchers("/home", "/home/**").hasAnyAuthority("ADMIN", "USER")
                     .antMatchers("/login", "/", "/join", "/h2-console/**").permitAll()
-                    .antMatchers("/home/**").access("hasRole('USER')")
                     .anyRequest().authenticated()
                 .and()
                     .formLogin()
                     .loginPage("/login")
-                    .loginProcessingUrl("/login")
+//                    .loginProcessingUrl("/login")
                     .defaultSuccessUrl("/home", true)
                     .usernameParameter("email").passwordParameter("password")
-                    .failureUrl("/login?error=true")
-                    .failureHandler(authenticationFailureHandler())
+//                    .failureUrl("/login?error=true")
+//                    .failureHandler(authenticationFailureHandler())
+//                .and()
+//                    .logout()
+//                    .logoutUrl("/logout")
+//                    .deleteCookies("JSESSIONID")
+//                    .logoutSuccessHandler(logoutSuccessHandler())
                 .and()
-                    .logout()
-                    .logoutUrl("/logout")
-                    .deleteCookies("JSESSIONID")
-                    .logoutSuccessHandler(logoutSuccessHandler())
+                    .exceptionHandling().accessDeniedHandler(webAccessDeniedHandler)
                 .and()
                     .csrf().requireCsrfProtectionMatcher(new AntPathRequestMatcher("!/h2-console/**"))
                 .and()
@@ -104,13 +100,5 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         provider.setUserDetailsService(securityUserService);
         provider.setPasswordEncoder(passwordEncoder());
         return provider;
-    }
-
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                    .withUser("user").password(passwordEncoder().encode("user")).roles("USER")
-                .and()
-                    .withUser("admin").password(passwordEncoder().encode("user")).roles("ADMIN");
     }
 }

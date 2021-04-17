@@ -34,8 +34,6 @@ public class UserService {
                 .name(userDto.getName())
                 .phoneNo(userDto.getPhoneNo())
                 .build();
-        System.out.println(user.getPassword());
-        System.out.println(passwordEncoder.matches(userDto.getPassword(), user.getPassword()));
         return userRepository.save(user);
     }
 

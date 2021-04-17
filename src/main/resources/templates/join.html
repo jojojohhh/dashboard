@@ -78,7 +78,6 @@
 
     $(function () {
         $("form").on("submit", function (e) {
-            console.log("submit");
             e.preventDefault();
             const $form = $(this).closest("form");
             const formData = $form.serializeObject();

@@ -46,4 +46,9 @@ public class LoginController {
         res.put("success", userService.join(userDto) != null ? true : false);
         return res;
     }
+
+    @GetMapping("/denied")
+    public String accessDenied() {
+        return "denied";
+    }
 }
