@@ -18,8 +18,8 @@ import java.io.IOException;
 import java.util.Set;
 
 @Component
-public class WebAccessDeniedHandler implements AccessDeniedHandler {
-    private static final Logger logger = LoggerFactory.getLogger(WebAccessDeniedHandler.class);
+public class CustomWebAccessDeniedHandler implements AccessDeniedHandler {
+    private static final Logger logger = LoggerFactory.getLogger(CustomWebAccessDeniedHandler.class);
 
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
