@@ -1,8 +1,8 @@
 package com.swlab.dashboard.config.security;
 
-import com.swlab.dashboard.config.security.handler.AuthFailureHandler;
+import com.swlab.dashboard.config.security.handler.CustomAuthenticationFailureHandler;
 import com.swlab.dashboard.config.security.handler.CustomLogoutSuccessHandler;
-import com.swlab.dashboard.config.security.handler.WebAccessDeniedHandler;
+import com.swlab.dashboard.config.security.handler.CustomWebAccessDeniedHandler;
 import com.swlab.dashboard.service.SecurityUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -24,12 +24,12 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private final WebAccessDeniedHandler webAccessDeniedHandler;
+    private final CustomWebAccessDeniedHandler customWebAccessDeniedHandler;
     private final SecurityUserService securityUserService;
 
     @Autowired
-    public SecurityConfiguration(WebAccessDeniedHandler webAccessDeniedHandler, SecurityUserService securityUserService) {
-        this.webAccessDeniedHandler = webAccessDeniedHandler;
+    public SecurityConfiguration(CustomWebAccessDeniedHandler customWebAccessDeniedHandler, SecurityUserService securityUserService) {
+        this.customWebAccessDeniedHandler = customWebAccessDeniedHandler;
         this.securityUserService = securityUserService;
     }
 
@@ -39,7 +39,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Bean
     public AuthenticationFailureHandler authenticationFailureHandler() {
-        return new AuthFailureHandler();
+        return new CustomAuthenticationFailureHandler();
     }
 
     @Bean
@@ -68,29 +68,28 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
-                    .authorizeRequests()
+                .authorizeRequests()
+                    .antMatchers("/login", "/", "/join", "/h2-console/**", "/denied").permitAll()
                     .antMatchers("/home", "/home/**").hasAnyAuthority("ADMIN", "USER")
-                    .antMatchers("/login", "/", "/join", "/h2-console/**").permitAll()
                     .anyRequest().authenticated()
-                .and()
-                    .formLogin()
+                    .and()
+                .formLogin()
                     .loginPage("/login")
-//                    .loginProcessingUrl("/login")
                     .defaultSuccessUrl("/home", true)
                     .usernameParameter("email").passwordParameter("password")
-//                    .failureUrl("/login?error=true")
-//                    .failureHandler(authenticationFailureHandler())
-//                .and()
-//                    .logout()
+                    .failureUrl("/login?error=true")
+                    .failureHandler(authenticationFailureHandler())
+//                    .and()
+//                .logout()
 //                    .logoutUrl("/logout")
 //                    .deleteCookies("JSESSIONID")
 //                    .logoutSuccessHandler(logoutSuccessHandler())
-                .and()
-                    .exceptionHandling().accessDeniedHandler(webAccessDeniedHandler)
-                .and()
-                    .csrf().requireCsrfProtectionMatcher(new AntPathRequestMatcher("!/h2-console/**"))
-                .and()
-                    .authenticationProvider(authenticationProvider()).csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
+                    .and()
+                .exceptionHandling().accessDeniedHandler(customWebAccessDeniedHandler)
+                    .and()
+                .csrf().requireCsrfProtectionMatcher(new AntPathRequestMatcher("!/h2-console/**"))
+                    .and()
+                .authenticationProvider(authenticationProvider()).csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
         http.headers().frameOptions().disable();
     }
 

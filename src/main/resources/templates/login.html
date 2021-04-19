@@ -36,11 +36,7 @@
                                 <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" >
                                 <label for="inputPassword">Password</label>
                             </div>
-
-                            <div class="custom-control custom-checkbox mb-3">
-                                <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                <label class="custom-control-label" for="customCheck1">Remember password</label>
-                            </div>
+                            <div id="loginFailMsg" th:text="${#request.getAttribute('errorMsg')}"></div>
                             <button id="btn_login" class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign in</button>
                         </form>
                         <a th:href="@{/join}">
@@ -56,7 +52,27 @@
         </div>
     </div>
     <script>
+        // window.onload = function() {
+        //     /*<![CDATA[*/
+        //     const errMsg = document.querySelector("#loginFailMsg");
+        //     const msg = "[(${loginFailMsg})]";
+        //     console.log(msg);
+        //     if (msg !== "") {
+        //         errMsg.innerHTML = msg
+        //         errMsg.style.display = "";
+        //     } else {
+        //         console.log('true')
+        //     }
+        //     /*]]>*/
+        // };
         $(function () {
+            const errMsg = document.querySelector("#loginFailMsg");
+
+            if (errMsg.innerText !== "") {
+                console.log("test")
+                errMsg.style.display = "inline";
+            }
+
             $(document.body).delegate(":input", "keyup", function (e) {
                 if (e.which == 13)
                     $("#btn_login").trigger("click");
