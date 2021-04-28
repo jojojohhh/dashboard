@@ -1,7 +1,6 @@
 package com.swlab.dashboard.config.security;
 
 import com.swlab.dashboard.config.security.handler.CustomAuthenticationFailureHandler;
-import com.swlab.dashboard.config.security.handler.CustomLogoutSuccessHandler;
 import com.swlab.dashboard.config.security.handler.CustomWebAccessDeniedHandler;
 import com.swlab.dashboard.service.SecurityUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,11 +42,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public LogoutSuccessHandler logoutSuccessHandler() {
-        return new CustomLogoutSuccessHandler();
-    }
-
-    @Bean
     public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
@@ -70,20 +64,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .authorizeRequests()
                     .antMatchers("/login", "/", "/join", "/h2-console/**", "/denied").permitAll()
-                    .antMatchers("/home", "/home/**").hasAnyAuthority("ADMIN", "USER")
+                    .antMatchers("/dashboard", "/dashboard/**").hasAnyAuthority("ADMIN", "USER")
                     .anyRequest().authenticated()
                     .and()
                 .formLogin()
                     .loginPage("/login")
-                    .defaultSuccessUrl("/home", true)
+                    .defaultSuccessUrl("/dashboard", true)
                     .usernameParameter("email").passwordParameter("password")
                     .failureUrl("/login?error=true")
                     .failureHandler(authenticationFailureHandler())
-//                    .and()
-//                .logout()
-//                    .logoutUrl("/logout")
-//                    .deleteCookies("JSESSIONID")
-//                    .logoutSuccessHandler(logoutSuccessHandler())
                     .and()
                 .exceptionHandling().accessDeniedHandler(customWebAccessDeniedHandler)
                     .and()

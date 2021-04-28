@@ -12,17 +12,32 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/static/css/index.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/login.css}" />
 </head>
 <body>
-    테스트
-<!--    <footer>-->
-<!--        &copy; 2021 swlab-->
-<!--        <span sec:authorize="isAuthenticated()">-->
-<!--            | user : <span sec:authentication="name"></span> |-->
-<!--            Roles : <span sec:authentication="principal.getAuthorities()"></span>-->
-<!--        </span>-->
-<!--    </footer>-->
+    <header>
+        <a th:href="@{/home}">
+            HOME
+        </a>
+        <ul>
+            <li>
+                <form id="logoutForm" th:action="@{/logout}" method="post" style="display: inline-block">
+                    <a href="#" onclick="document.getElementById('logoutForm').submit()" data-toggle="tooltip" data-placement="logout" title="Logout">
+                        <i class="fa fa-power-off"></i>
+                    </a>
+                </form>
+            </li>
+        </ul>
+    </header>
+
+
+    <footer>
+        &copy; 2021 swlab
+        <span sec:authorize="isAuthenticated()">
+            | user : <span sec:authentication="name"></span> |
+            Roles : <span sec:authentication="principal.authorities"></span>
+        </span>
+    </footer>
 
 </body>
 </html>
