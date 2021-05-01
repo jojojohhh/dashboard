@@ -16,3 +16,4 @@
         - gitlab 인증 요청을 보내는 API ```/auth/gitlab/authorize``` 의 내부 로직
           - ```https://gitlab.example.com/oauth/authorize?client_id=APP_ID&redirect_uri=REDIRECT_URI&response_type=code&state=STATE&scope=REQUESTED_SCOPES&code_challenge=CODE_CHALLENGE&code_challenge_method=S256``` 와 같이 gitlab에 인증 요청을 보내고 redirect Uri으로 결과를 받음
         - gitlab 인증 결과를 받는 API ```/auth/gitlab/callback``` 
+  5. 대시보드 템플릿 적용하기
