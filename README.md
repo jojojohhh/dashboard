@@ -12,3 +12,8 @@
       - Controller에서 ```@RequestBody UserDto userdto``` 형식으로 데이터를 매핑 시킬 수 있음
       - ```content-type: 'application/x-www-form-urlencoded;set-UTF-8'``` 으로 전송 시키는 경우 ```@ModelAttribute UserDto userdto```와 같이 사용가능
   4. gitlab 소셜 로그인 기능 추가하기
+      - gitlab oauth2를 이용한 로그인 인증처리 (https://docs.gitlab.com/ee/api/oauth2.html)
+        - gitlab 인증 요청을 보내는 API ```/auth/gitlab/authorize``` 의 내부 로직
+          - ```https://gitlab.example.com/oauth/authorize?client_id=APP_ID&redirect_uri=REDIRECT_URI&response_type=code&state=STATE&scope=REQUESTED_SCOPES&code_challenge=CODE_CHALLENGE&code_challenge_method=S256``` 와 같이 gitlab에 인증 요청을 보내고 redirect Uri으로 결과를 받음
+        - gitlab 인증 결과를 받는 API ```/auth/gitlab/callback``` 
+  5. 대시보드 템플릿 적용하기
