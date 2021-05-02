@@ -12,6 +12,7 @@
       - Controller에서 ```@RequestBody UserDto userdto``` 형식으로 데이터를 매핑 시킬 수 있음
       - ```content-type: 'application/x-www-form-urlencoded;set-UTF-8'``` 으로 전송 시키는 경우 ```@ModelAttribute UserDto userdto```와 같이 사용가능
   4. 템플릿 엔진 thymeleaf -> mustache 변경
+  5. 사용할 무료 대시보드 수정 및 적용하기
   6. gitlab 소셜 로그인 기능 추가하기
       - gitlab oauth2를 이용한 로그인 인증처리 (https://docs.gitlab.com/ee/api/oauth2.html)
         - gitlab 인증 요청을 보내는 API ```/auth/gitlab/authorize``` 의 내부 로직
