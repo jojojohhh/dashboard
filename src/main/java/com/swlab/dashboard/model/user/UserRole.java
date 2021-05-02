@@ -6,14 +6,13 @@ import com.swlab.dashboard.model.BaseEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 
 @NoArgsConstructor
-@Getter @Setter
+@Getter
 @Entity
 @Table(name = "user_role", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "role_type"})})
 @DynamicUpdate
