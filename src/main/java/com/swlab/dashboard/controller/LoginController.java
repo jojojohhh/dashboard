@@ -1,6 +1,5 @@
 package com.swlab.dashboard.controller;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import com.swlab.dashboard.dto.UserDto;
 import com.swlab.dashboard.model.user.SecurityUser;
 import com.swlab.dashboard.model.user.UserRole;
@@ -8,6 +7,8 @@ import com.swlab.dashboard.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,15 +16,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RequiredArgsConstructor
-@RestController
+@Controller
 public class LoginController {
 
     private final UserService userService;
 
     @RequestMapping(value = {"", "/login"})
-    public String getLogin(@AuthenticationPrincipal SecurityUser user, HttpServletRequest req) {
+    public String getLogin(@AuthenticationPrincipal SecurityUser user, HttpServletRequest req, Model model) {
         if (user != null && user.getRoleType().contains(UserRole.RoleType.USER)) {
             return "redirect:/home";
+        }
+        if (req.getAttribute("errorMsg") != null) {
+            model.addAttribute("err", req.getAttribute("errorMsg"));
         }
         return "login";
     }
