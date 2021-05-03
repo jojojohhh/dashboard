@@ -1,5 +1,6 @@
 package com.swlab.dashboard;
 
+import com.samskivert.mustache.Mustache;
 import com.swlab.dashboard.model.user.User;
 import com.swlab.dashboard.model.user.UserRole;
 import com.swlab.dashboard.repository.UserRepository;
@@ -7,8 +8,10 @@ import com.swlab.dashboard.repository.UserRoleRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.mustache.MustacheEnvironmentCollector;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.env.Environment;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
@@ -25,6 +28,14 @@ public class DashboardApplication {
 			userRepository.save(user);
 			userRoleRepository.save(UserRole.builder().user(user).roleType(UserRole.RoleType.USER).build());
 		});
+	}
+
+	@Bean
+	public Mustache.Compiler mustacheCompiler(Mustache.TemplateLoader templateLoader, Environment env) {
+		MustacheEnvironmentCollector collector = new MustacheEnvironmentCollector();
+		collector.setEnvironment(env);
+
+		return Mustache.compiler().defaultValue("").withLoader(templateLoader).withCollector(collector);
 	}
 
 }
