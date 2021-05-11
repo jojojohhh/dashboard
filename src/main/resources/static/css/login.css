@@ -107,6 +107,7 @@ body {
 #loginFailMsg {
     color: red;
     display: none;
+    font-size: 15px;
 }
 
 .input-email-not-exist {

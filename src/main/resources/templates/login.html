@@ -1,95 +1,71 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta http-equiv="Cache-Control" content="no-cache">
-    <meta http-equiv="expires" content="-1">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta th:name="_csrf" th:content="${_csrf.token}"/>
-    <meta th:name="_csrf_header" th:content="${_csrf.headerName}"/>
+      xmlns:th="http://www.thymeleaf.org">
 
-    <title>Sign In</title>
+    <!--  header fragment   -->
+    <th:block th:replace="fragment/header :: header"></th:block>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/static/css/login.css}" />
-</head>
-<body>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-                <div class="card card-signin my-5">
-                    <div class="card-body">
-                        <h5 class="card-title text-center">Sign In</h5>
-                        <form class="form-signin" th:action="@{/login}" method="post">
-                            <div class="form-label-group">
-                                <input type="text" name="email" id="inputEmail" class="form-control" placeholder="Email address"  autofocus>
-                                <label for="inputEmail">Email address</label>
-                            </div>
-                            <div class="form-label-group">
-                                <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" >
-                                <label for="inputPassword">Password</label>
-                            </div>
-                            <div id="loginFailMsg" th:text="${#request.getAttribute('errorMsg')}"></div>
-                            <button id="btn_login" class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign in</button>
-                        </form>
-                        <a th:href="@{/join}">
-                            <button id="btn_join" class="btn btn-lg btn-primary btn-signup btn-block text-uppercase">Sign up</button>
-                        </a>
-                        <hr class="my-4">
-                        <button class="btn btn-lg btn-google btn-block text-uppercase" type="submit">
-                            <i class="fab fa-github"></i> Sign in with gitlab
-                        </button>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+                    <div class="card card-signin my-5">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Sign In</h5>
+                            <form class="form-signin" th:action="@{/login}" method="post">
+                                <div class="form-label-group">
+                                    <input type="text" name="email" id="inputEmail" class="form-control" placeholder="Email address"  autofocus>
+                                    <label for="inputEmail">Email address</label>
+                                </div>
+                                <div class="form-label-group">
+                                    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" >
+                                    <label for="inputPassword">Password</label>
+                                </div>
+                                <div id="loginFailMsg" th:text="${#request.getAttribute('errorMsg')}"></div>
+                                <button id="btn_login" class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign in</button>
+                            </form>
+                            <a th:href="@{/join}">
+                                <button id="btn_join" class="btn btn-lg btn-primary btn-signup btn-block text-uppercase">Sign up</button>
+                            </a>
+                            <hr class="my-4">
+                            <button class="btn btn-lg btn-google btn-block text-uppercase" type="submit">
+                                <i class="fab fa-github"></i> Sign in with gitlab
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <script>
-        // window.onload = function() {
-        //     /*<![CDATA[*/
-        //     const errMsg = document.querySelector("#loginFailMsg");
-        //     const msg = "[(${loginFailMsg})]";
-        //     console.log(msg);
-        //     if (msg !== "") {
-        //         errMsg.innerHTML = msg
-        //         errMsg.style.display = "";
-        //     } else {
-        //         console.log('true')
-        //     }
-        //     /*]]>*/
-        // };
-        $(function () {
-            const errMsg = document.querySelector("#loginFailMsg");
 
-            if (errMsg.innerText !== "") {
-                console.log("test")
-                errMsg.style.display = "inline";
-            }
+        <!--  footer fragment  -->
+        <th:block th:replace="fragment/footer :: footer"></th:block>
 
-            $(document.body).delegate(":input", "keyup", function (e) {
-                if (e.which == 13)
-                    $("#btn_login").trigger("click");
-            });
+        <script>
+            $(function () {
+                const errMsg = document.querySelector("#loginFailMsg");
 
-            $("#btn_login").on("click", function () {
-                const email = $("input[name='email']").val(), password = $("input[name='password']").val();
-                if (email == "") {
-                    alert("이 메일을 입력하세요.");
-                    return false;
-                } else if (password == "") {
-                    alert("비밀번호를 입력하세요.");
-                    return false;
+                if (errMsg.innerText !== "") {
+                    console.log("test")
+                    errMsg.style.display = "inline";
                 }
-                $(this).closest("form").submit();
+
+                $(document.body).delegate(":input", "keyup", function (e) {
+                    if (e.which == 13)
+                        $("#btn_login").trigger("click");
+                });
+
+                $("#btn_login").on("click", function () {
+                    const email = $("input[name='email']").val(), password = $("input[name='password']").val();
+                    if (email == "") {
+                        alert("이 메일을 입력하세요.");
+                        return false;
+                    } else if (password == "") {
+                        alert("비밀번호를 입력하세요.");
+                        return false;
+                    }
+                    $(this).closest("form").submit();
+                });
             });
-        });
-    </script>
-</body>
+        </script>
+    </body>
 </html>
