@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <th:block th:fragment="footer">
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+        </aside>
+        <!-- /.control-sidebar -->
+
+        <footer class="main-footer">
+            <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
+            All rights reserved.
+            <div class="float-right d-none d-sm-inline-block">
+                <b>Version</b> 3.1.0
+            </div>
+        </footer>
+    </th:block>
+
+    <th:block th:fragment="script">
+        <!-- jQuery -->
+        <script th:src="@{/static/js/plugins/jquery.min.js}"></script>
+        <!-- Bootstrap -->
+        <script th:src="@{/static/js/plugins/bootstrap.bundle.min.js}"></script>
+        <!-- jQuery UI -->
+        <script th:src="@{/static/js/plugins/jquery-ui.min.js}"></script>
+        <!-- Ekko Lightbox -->
+        <script th:src="@{/static/js/plugins/ekko-lightbox.min.js}"></script>
+        <!-- overlayScrollbars -->
+        <script th:src="@{/static/js/plugins/jquery.overlayScrollbars.min.js}"></script>
+        <!-- AdminLTE -->
+        <script th:src="@{/static/js/adminlte.min.js}"></script>
+        <!-- OPTIONAL SCRIPTS -->
+        <script th:src="@{/static/js/plugins/Chart.min.js}"></script>
+        <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+        <script th:src="@{/static/js/dashboard.js}"></script>
+        <!-- fullCalendar 2.2.5 -->
+        <script th:src="@{/static/js/plugins/moment.min.js}"></script>
+        <script th:src="@{/static/js/plugins/calendar-main.js}"></script>
+        <!-- Filterizr-->
+        <script th:src="@{/static/js/plugins/jquery.filterizr.min.js}"></script>
+        <!-- AdminLTE for demo purposes -->
+        <script th:src="@{/static/js/demo.js}"></script>
+    </th:block>
+</html>
