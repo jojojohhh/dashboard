@@ -21,4 +21,3 @@
   6. API 작성하기
       - Gitlab Java API Wrapper (https://github.com/timols/java-gitlab-api) 및 GitLab4J API GitLab API Java Client (https://github.com/gitlab4j/gitlab4j-api) 라이브러리 의존성 추가
         - 둘 다 사용해보고 더 나은 라이브러리 사용하기
-        - 
