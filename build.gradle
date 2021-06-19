@@ -26,7 +26,6 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
 	implementation group: 'nz.net.ultraq.thymeleaf', name: 'thymeleaf-layout-dialect', version: '2.5.3'
-	implementation group: 'org.gitlab', name: 'java-gitlab-api', version: '4.1.1'
 	implementation group: 'org.gitlab4j', name: 'gitlab4j-api', version: '4.16.0'
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.h2database:h2'
