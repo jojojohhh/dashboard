@@ -31,12 +31,21 @@ public class LoginController {
         }
         return "login";
     }
+    @GetMapping("/test")
+    public String test() {
+        return "test";
+    }
+
 
     /*
         GitLab 인증 요청을 보내는 API
      */
+
     @PostMapping("/auth/gitlab/authorize")
-    public void gitLabAuthorize() {
+    public String gitLabAuthorize(HttpServletRequest req, Model model) {
+        model.addAttribute("email", req.getParameter("email"));
+        model.addAttribute("password", req.getParameter("password"));
+        return "redirect:/test";
         //https://gitlab.example.com/oauth/authorize?client_id=APP_ID&redirect_uri=REDIRECT_URI&response_type=code&state=STATE&scope=REQUESTED_SCOPES&code_challenge=CODE_CHALLENGE&code_challenge_method=S256
     }
 
