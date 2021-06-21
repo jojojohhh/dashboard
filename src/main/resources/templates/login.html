@@ -52,6 +52,7 @@
                     if (e.which == 13)
                         $("#btn_login").trigger("click");
                 });
+
                 const login_form = $("#loginForm")
 
                 $("#btn_login").on("click", function () {
@@ -67,7 +68,6 @@
                 });
 
                 $("#btn-gitlab").on("click", function () {
-                    console.log("click")
                     const email = $("input[name='email']").val(), password = $("input[name='password']").val();
                     if (email == "") {
                         alert("이 메일을 입력하세요.");
