@@ -17,6 +17,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
 public class DashboardApplication {
 
+	static {
+		System.setProperty("spring.config.location", "classpath:/application.yml");
+	}
+
 	public static void main(String[] args) {
 		SpringApplication.run(DashboardApplication.class, args);
 	}
@@ -29,13 +33,4 @@ public class DashboardApplication {
 			userRoleRepository.save(UserRole.builder().user(user).roleType(UserRole.RoleType.USER).build());
 		});
 	}
-
-	@Bean
-	public Mustache.Compiler mustacheCompiler(Mustache.TemplateLoader templateLoader, Environment env) {
-		MustacheEnvironmentCollector collector = new MustacheEnvironmentCollector();
-		collector.setEnvironment(env);
-
-		return Mustache.compiler().defaultValue("").withLoader(templateLoader).withCollector(collector);
-	}
-
 }
