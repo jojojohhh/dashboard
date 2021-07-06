@@ -20,4 +20,5 @@
         - gitlab 인증 결과를 받는 API ```/auth/gitlab/callback``` 
   6. API 작성하기
       - GitLab4J API GitLab API Java Client (https://github.com/gitlab4j/gitlab4j-api) 라이브러리 의존성 추가
-       
+      - gitlab application id, secret 추가
+      - gitlab access token 가져
