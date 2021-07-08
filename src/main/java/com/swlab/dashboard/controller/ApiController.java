@@ -6,14 +6,12 @@ import org.gitlab4j.api.GitLabApiException;
 import org.gitlab4j.api.models.Project;
 import org.gitlab4j.api.models.User;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.info.ProjectInfoProperties;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 
-@Controller
+@RestController
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class ApiController {
@@ -39,14 +37,16 @@ public class ApiController {
     }
 
     @RequestMapping("/projects")
+    public List<Project> getProjects() throws GitLabApiException {
+        gitLabApi = getGitLabApi();
+        List<Project> projects = gitLabApi.getProjectApi().getProjects();
+        return projects;
+    }
+
+    @RequestMapping("/projects")
     public List<Project> getProjects(@RequestParam String search) throws GitLabApiException {
         gitLabApi = getGitLabApi();
-        List<Project> projects;
-        if (search.isEmpty() || search == null) {
-            projects = gitLabApi.getProjectApi().getProjects();
-        } else {
-            projects = gitLabApi.getProjectApi().getProjects(search);
-        }
+        List<Project> projects = gitLabApi.getProjectApi().getProjects(search);
         return projects;
     }
 }

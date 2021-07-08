@@ -18,7 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class DashboardApplication {
 
 	static {
-		System.setProperty("spring.config.location", "classpath:/application.yml");
+		System.setProperty("spring.config.location", "classpath:/application.yml, classpath:/application-oauth.yml");
 	}
 
 	public static void main(String[] args) {
