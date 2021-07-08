@@ -1,5 +1,7 @@
 package com.swlab.dashboard.controller;
 
+import com.swlab.dashboard.utils.ApiResult;
+import com.swlab.dashboard.utils.ApiUtils;
 import lombok.RequiredArgsConstructor;
 import org.gitlab4j.api.GitLabApi;
 import org.gitlab4j.api.GitLabApiException;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -30,23 +33,38 @@ public class ApiController {
     }
 
     @RequestMapping("/users")
-    public List<User> getUsers(@RequestParam String email) throws GitLabApiException {
+    public ApiResult<List<User>> getUsers(@RequestParam String email) throws GitLabApiException {
         gitLabApi = getGitLabApi();
-        List<User> users = gitLabApi.getUserApi().findUsers(email);
-        return users;
+        return ApiUtils.success(
+                gitLabApi
+                        .getUserApi()
+                        .findUsers(email)
+                            .stream()
+                            .collect(Collectors.toList())
+        );
     }
 
     @RequestMapping("/projects")
-    public List<Project> getProjects() throws GitLabApiException {
+    public ApiResult<List<Project>> getProjects() throws GitLabApiException {
         gitLabApi = getGitLabApi();
-        List<Project> projects = gitLabApi.getProjectApi().getProjects();
-        return projects;
+        return ApiUtils.success(
+                gitLabApi
+                        .getProjectApi()
+                        .getProjects()
+                            .stream()
+                            .collect(Collectors.toList())
+        );
     }
 
     @RequestMapping("/projects")
-    public List<Project> getProjects(@RequestParam String search) throws GitLabApiException {
+    public ApiResult<List<Project>> getProjects(@RequestParam String search) throws GitLabApiException {
         gitLabApi = getGitLabApi();
-        List<Project> projects = gitLabApi.getProjectApi().getProjects(search);
-        return projects;
+        return ApiUtils.success(
+                gitLabApi
+                        .getProjectApi()
+                        .getProjects(search)
+                            .stream()
+                            .collect(Collectors.toList())
+        );
     }
 }
