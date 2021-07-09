@@ -1,5 +1,6 @@
 package com.swlab.dashboard.controller;
 
+import com.swlab.dashboard.config.properties.GitlabProperties;
 import com.swlab.dashboard.utils.ApiResult;
 import com.swlab.dashboard.utils.ApiUtils;
 import lombok.RequiredArgsConstructor;
@@ -7,7 +8,6 @@ import org.gitlab4j.api.GitLabApi;
 import org.gitlab4j.api.GitLabApiException;
 import org.gitlab4j.api.models.Project;
 import org.gitlab4j.api.models.User;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,17 +19,13 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ApiController {
 
-    @Value("${spring.security.oauth2.client.registration.gitlab.url}")
-    private final String gitlabUrl;
-
-    @Value("${spring.security.oauth2.client.registration.gitlab.personalAccessToken}")
-    private final String token;
+    private final GitlabProperties gitlabProperties;
 
     private GitLabApi gitLabApi;
 
 
     public GitLabApi getGitLabApi() {
-        return new GitLabApi(gitlabUrl, token);
+        return new GitLabApi(gitlabProperties.getUrl(), gitlabProperties.getPersonalAccessToken());
     }
 
     @RequestMapping("/users")
