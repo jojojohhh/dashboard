@@ -24,7 +24,5 @@ public class ApiControllerTest {
 
     @Test
     public void gitlabPropertiesTest() {
-        Assertions.assertEquals("gitlab.ks.ac.kr:10800", gitlabProperties.getUrl());
-        Assertions.assertEquals("TUbEkxRPaQnseeSMXxYa", gitlabProperties.getPersonalAccessToken());
     }
 }
