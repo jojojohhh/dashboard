@@ -23,7 +23,6 @@ public class ApiController {
 
     private GitLabApi gitLabApi;
 
-
     public GitLabApi getGitLabApi() {
         return new GitLabApi(gitlabProperties.getUrl(), gitlabProperties.getPersonalAccessToken());
     }
