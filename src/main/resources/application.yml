@@ -1,4 +1,7 @@
 spring:
+  config:
+    import:
+      - optional:classpath:/application-gitlab.yml
   thymeleaf:
     mode: HTML
     encoding: UTF-8
@@ -33,6 +36,9 @@ spring:
       roles:
         - ADMIN
         - USER
-
 server:
   port: 8888
+logging:
+  level:
+    root: "info"
+    com.swlab.dashboard.controller: "debug"
