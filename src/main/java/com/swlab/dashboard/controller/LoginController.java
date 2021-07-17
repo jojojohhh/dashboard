@@ -5,9 +5,7 @@ import com.swlab.dashboard.model.user.SecurityUser;
 import com.swlab.dashboard.model.user.UserRole;
 import com.swlab.dashboard.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.gitlab4j.api.GitLabApi;
 import org.gitlab4j.api.GitLabApiException;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -22,11 +20,7 @@ import java.util.Map;
 @Controller
 public class LoginController {
 
-    @Value("${spring.security.oauth2.client.registration.gitlab.url}")
-    private final String gitlabUrl;
-
     private final UserService userService;
-    private GitLabApi gitLabApi;
 
     @RequestMapping(value = {"", "/login"})
     public String getLogin(@AuthenticationPrincipal SecurityUser user, HttpServletRequest req, Model model) {
