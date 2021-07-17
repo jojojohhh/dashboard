@@ -2,8 +2,6 @@ package com.swlab.dashboard.controller;
 
 import com.swlab.dashboard.config.properties.GitlabProperties;
 import com.swlab.dashboard.utils.ApiResult;
-import com.swlab.dashboard.utils.ApiUtils;
-import lombok.RequiredArgsConstructor;
 import org.gitlab4j.api.GitLabApi;
 import org.gitlab4j.api.GitLabApiException;
 import org.gitlab4j.api.models.Project;
@@ -11,55 +9,39 @@ import org.gitlab4j.api.models.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
+import static com.swlab.dashboard.utils.ApiUtils.success;
 
 @RestController
 @RequestMapping("/api/v1")
-@RequiredArgsConstructor
 public class ApiController {
 
-    private final GitlabProperties gitlabProperties;
+    private GitlabProperties gitlabProperties;
 
     private GitLabApi gitLabApi;
 
-    public GitLabApi getGitLabApi() {
-        return new GitLabApi(gitlabProperties.getUrl(), gitlabProperties.getPersonalAccessToken());
+    public ApiController(GitlabProperties gitlabProperties) {   this.gitlabProperties = gitlabProperties;   }
+
+    public void setGitLabApi() {
+        this.gitLabApi = new GitLabApi(gitlabProperties.getUrl(), gitlabProperties.getPersonalAccessToken());
+        gitLabApi.setRequestTimeout(1000, 5000);
     }
 
-    @RequestMapping("/users")
-    public ApiResult<List<User>> getUsers(@RequestParam String email) throws GitLabApiException {
-        gitLabApi = getGitLabApi();
-        return ApiUtils.success(
-                gitLabApi
-                        .getUserApi()
-                        .findUsers(email)
-                            .stream()
-                            .collect(Collectors.toList())
-        );
+    @RequestMapping("/users/{email}")
+    public ApiResult<List<User>> getUsers(@PathVariable String email) throws GitLabApiException {
+        setGitLabApi();
+        return success(gitLabApi.getUserApi().findUsers(email));
     }
 
     @RequestMapping("/projects")
     public ApiResult<List<Project>> getProjects() throws GitLabApiException {
-        gitLabApi = getGitLabApi();
-        return ApiUtils.success(
-                gitLabApi
-                        .getProjectApi()
-                        .getProjects()
-                            .stream()
-                            .collect(Collectors.toList())
-        );
+        setGitLabApi();
+        return success(gitLabApi.getProjectApi().getProjects());
     }
 
-    @RequestMapping("/projects")
-    public ApiResult<List<Project>> getProjects(@RequestParam String search) throws GitLabApiException {
-        gitLabApi = getGitLabApi();
-        return ApiUtils.success(
-                gitLabApi
-                        .getProjectApi()
-                        .getProjects(search)
-                            .stream()
-                            .collect(Collectors.toList())
-        );
+    @RequestMapping("/projects/{search}")
+    public ApiResult<List<Project>> getProjects(@PathVariable String search) throws GitLabApiException {
+        setGitLabApi();
+        return success(gitLabApi.getProjectApi().getProjects(search));
     }
 }

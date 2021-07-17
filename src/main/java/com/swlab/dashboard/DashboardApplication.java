@@ -1,6 +1,5 @@
 package com.swlab.dashboard;
 
-import com.samskivert.mustache.Mustache;
 import com.swlab.dashboard.config.properties.GitlabProperties;
 import com.swlab.dashboard.model.user.User;
 import com.swlab.dashboard.model.user.UserRole;
@@ -9,20 +8,14 @@ import com.swlab.dashboard.repository.UserRoleRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.mustache.MustacheEnvironmentCollector;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.core.env.Environment;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
 @EnableConfigurationProperties(GitlabProperties.class)
 public class DashboardApplication {
-
-	static {
-		System.setProperty("spring.config.location", "classpath:/application.yml, classpath:/application-oauth.yml");
-	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(DashboardApplication.class, args);
