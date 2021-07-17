@@ -27,19 +27,19 @@ public class ApiController {
         gitLabApi.setRequestTimeout(1000, 5000);
     }
 
-    @RequestMapping("/users/{email}")
+    @GetMapping("/users/{email}")
     public ApiResult<List<User>> getUsers(@PathVariable String email) throws GitLabApiException {
         setGitLabApi();
         return success(gitLabApi.getUserApi().findUsers(email));
     }
 
-    @RequestMapping("/projects")
+    @GetMapping("/projects")
     public ApiResult<List<Project>> getProjects() throws GitLabApiException {
         setGitLabApi();
         return success(gitLabApi.getProjectApi().getProjects());
     }
 
-    @RequestMapping("/projects/{search}")
+    @GetMapping("/projects/{search}")
     public ApiResult<List<Project>> getProjects(@PathVariable String search) throws GitLabApiException {
         setGitLabApi();
         return success(gitLabApi.getProjectApi().getProjects(search));
