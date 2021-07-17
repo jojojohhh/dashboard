@@ -37,4 +37,4 @@ out/
 .vscode/
 
 ### Property File ###
-/src/main/resources/application-oauth.yml
+/src/main/resources/application-gitlab.yml
