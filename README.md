@@ -23,3 +23,5 @@
       - gitlab personalAccessToken, url을 application-gitlab.yml에 저장
       - GitLabProperties.class로 프로퍼티를 받아옴
       - OpenApi와 swagger-ui를 적용
+  7. 예외처리
+      - 각 종 예외에 대한 응답 구현하기
