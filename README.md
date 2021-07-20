@@ -24,4 +24,6 @@
       - GitLabProperties.class로 프로퍼티를 받아옴
       - OpenApi와 swagger-ui를 적용
   7. 예외처리
-      - 각 종 예외에 대한 응답 구현하기
+      - 각 종 예외에 대한 응답 구현
+  8. Repository
+      - jpa 대신 jdbctemplate 사용해 직접 쿼리를 작성
