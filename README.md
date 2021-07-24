@@ -28,3 +28,4 @@
   8. Repository
       - ObjectMapper, jdbctemplate 라이브러리 의존성 추가
       - jpa 대신 jdbctemplate 사용해 직접 쿼리를 작성
+        - jpa와 jdbc로 분리하여 작성
