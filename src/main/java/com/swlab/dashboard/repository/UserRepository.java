@@ -1,6 +1,7 @@
 package com.swlab.dashboard.repository;
 
 import com.swlab.dashboard.model.user.User;
+
 import org.springframework.data.jpa.repository.EntityGraph;
 
 import java.util.Optional;

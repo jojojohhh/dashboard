@@ -2,6 +2,7 @@ package com.swlab.dashboard.repository.jdbc;
 
 import com.swlab.dashboard.model.user.User;
 import com.swlab.dashboard.repository.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;

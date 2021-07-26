@@ -5,6 +5,7 @@ import com.swlab.dashboard.model.user.User;
 import com.swlab.dashboard.model.user.UserRole;
 import com.swlab.dashboard.repository.Jpa.JpaUserRepository;
 import com.swlab.dashboard.repository.UserRoleRepository;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
