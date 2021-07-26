@@ -4,7 +4,7 @@ import com.swlab.dashboard.dto.UserDto;
 import com.swlab.dashboard.model.user.User;
 import com.swlab.dashboard.model.user.UserRole;
 import com.swlab.dashboard.repository.Jpa.JpaUserRepository;
-import com.swlab.dashboard.repository.UserRoleRepository;
+import com.swlab.dashboard.repository.Jpa.JpaUserRoleRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,7 +20,7 @@ import java.util.Optional;
 public class UserService {
 
     private final JpaUserRepository userRepository;
-    private final UserRoleRepository userRoleRepository;
+    private final JpaUserRoleRepository userRoleRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Transactional(readOnly = true)
