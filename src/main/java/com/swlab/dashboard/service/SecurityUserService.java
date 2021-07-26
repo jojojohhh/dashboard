@@ -2,7 +2,7 @@ package com.swlab.dashboard.service;
 
 import com.swlab.dashboard.model.user.SecurityUser;
 import com.swlab.dashboard.model.user.User;
-import com.swlab.dashboard.repository.UserRepository;
+import com.swlab.dashboard.repository.Jpa.JpaUserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +18,10 @@ public class SecurityUserService implements UserDetailsService {
 
     private Logger logger = LoggerFactory.getLogger(SecurityUserService.class);
 
-    private final UserRepository userRepository;
+    private final JpaUserRepository userRepository;
 
     @Autowired
-    public SecurityUserService(UserRepository userRepository) {
+    public SecurityUserService(JpaUserRepository userRepository) {
         this.userRepository = userRepository;
     }
 

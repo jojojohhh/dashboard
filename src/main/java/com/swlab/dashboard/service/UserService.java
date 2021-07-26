@@ -3,6 +3,7 @@ package com.swlab.dashboard.service;
 import com.swlab.dashboard.dto.UserDto;
 import com.swlab.dashboard.model.user.User;
 import com.swlab.dashboard.model.user.UserRole;
+import com.swlab.dashboard.repository.Jpa.JpaUserRepository;
 import com.swlab.dashboard.repository.UserRepository;
 import com.swlab.dashboard.repository.UserRoleRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserService {
 
-    private final UserRepository userRepository;
+    private final JpaUserRepository userRepository;
     private final UserRoleRepository userRoleRepository;
     private final PasswordEncoder passwordEncoder;
 
