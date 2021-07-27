@@ -2,10 +2,10 @@
 이 프로젝트는 Spring Boot로 개발하는 Gitlab API기반 대시보드 입니다.
 
 ## 할 일
-  1. ~Spring Security5를 이용한 로그인 처리~
+  1. Spring Security5를 이용한 로그인 처리
       - _csrf.token 적용
-  2. ~로그인 form 만들기~
-  3. ~회원가입 기능 추가~
+  2. 로그인 form 만들기
+  3. 회원가입 기능 추가
       - 회원가입 form에서 post요청시 Controller에서 받는 데이터의 ```content-type: 'application/x-www-form-urlencoded;set-UTF-8'```
       - Controller에서 ```@RequestBody```로 데이터를 dto에 매핑 시키기 위해서는 ```content-type: 'application/json'``` 이어야 함
       - ```content-type: 'application/json'```으로 전송 시키기 위해서는 jQuery를 사용해 ajax 통신이 필요 
@@ -25,7 +25,8 @@
       - OpenApi와 swagger-ui를 적용
   7. 예외처리
       - 각 종 예외에 대한 응답 구현
-  8. Repository
+  8. ~~Repository~~
       - ObjectMapper, jdbctemplate 라이브러리 의존성 추가
       - jpa 대신 jdbctemplate 사용해 직접 쿼리를 작성
         - jpa와 jdbc로 분리하여 작성
+          - jpa와 jdbc로 분리하여 테스트 해보는 것은 공부가 부족함 jpa와 jdbc에 대한 적당한 공부 후 간단한 게시판 만들기로 테스트 하기
