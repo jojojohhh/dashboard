@@ -3,9 +3,9 @@ package com.swlab.dashboard.service;
 import com.swlab.dashboard.dto.UserDto;
 import com.swlab.dashboard.model.user.User;
 import com.swlab.dashboard.model.user.UserRole;
-import com.swlab.dashboard.repository.Jpa.JpaUserRepository;
-import com.swlab.dashboard.repository.Jpa.JpaUserRoleRepository;
 
+import com.swlab.dashboard.repository.UserRepository;
+import com.swlab.dashboard.repository.UserRoleRepository;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,8 +19,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserService {
 
-    private final JpaUserRepository userRepository;
-    private final JpaUserRoleRepository userRoleRepository;
+    private final UserRepository userRepository;
+    private final UserRoleRepository userRoleRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Transactional(readOnly = true)

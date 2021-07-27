@@ -3,9 +3,9 @@ package com.swlab.dashboard;
 import com.swlab.dashboard.config.properties.GitlabProperties;
 import com.swlab.dashboard.model.user.User;
 import com.swlab.dashboard.model.user.UserRole;
-import com.swlab.dashboard.repository.Jpa.JpaUserRepository;
-import com.swlab.dashboard.repository.Jpa.JpaUserRoleRepository;
 
+import com.swlab.dashboard.repository.UserRepository;
+import com.swlab.dashboard.repository.UserRoleRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,7 +23,7 @@ public class DashboardApplication {
 	}
 
 	@Bean
-	public CommandLineRunner runner(JpaUserRepository userRepository, JpaUserRoleRepository userRoleRepository, PasswordEncoder passwordEncoder) {
+	public CommandLineRunner runner(UserRepository userRepository, UserRoleRepository userRoleRepository, PasswordEncoder passwordEncoder) {
 		return (args -> {
 			User user = User.builder().email("qwer@qwer.qwer").password(passwordEncoder.encode("1234")).name("jo").phoneNo("01028788714").build();
 			userRepository.save(user);
