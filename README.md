@@ -25,7 +25,8 @@
       - OpenApi와 swagger-ui를 적용
   7. 예외처리
       - 각 종 예외에 대한 응답 구현
-  8. Repository
+  8. ~~Repository~~
       - ObjectMapper, jdbctemplate 라이브러리 의존성 추가
-      - jpa 대신 jdbctemplate 사용해 직접 쿼리를 작성
+      - ~jpa 대신 jdbctemplate 사용해 직접 쿼리를 작성~
         - jpa와 jdbc로 분리하여 작성
+          - jpa와 jdbc로 분리하여 테스트 해보는 것은 공부가 부족함 jpa와 jdbc에 대한 적당한 공부 후 간단한 게시판 만들기로 테스트 하기
