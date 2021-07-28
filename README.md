@@ -11,8 +11,13 @@
       - ```content-type: 'application/json'```으로 전송 시키기 위해서는 jQuery를 사용해 ajax 통신이 필요 
       - Controller에서 ```@RequestBody UserDto userdto``` 형식으로 데이터를 매핑 시킬 수 있음
       - ```content-type: 'application/x-www-form-urlencoded;set-UTF-8'``` 으로 전송 시키는 경우 ```@ModelAttribute UserDto userdto```와 같이 사용가능
-  4. 사용할 무료 대시보드 수정 및 적용하기
-      - 출처: [Admin-LTE](https://github.com/ColorlibHQ/AdminLTE)
+  4. Repository
+      - jpa 테스트 코드를 작성하는데 테스트 코드에 있지도 않은 passwordencoder의 빈을 찾을 수 없다는 에러가 계속 발생함
+        - TestConfig 클래스를 생성하고 passwordencoder를 bean으로 등록한 뒤 Import 어노테이션을 이용해 TestConfig 클래스를 import하여 에러 해결
+          - 왜 이러한 문제가 발생하는지 문제점 
+      - jpa 대신 jdbctemplate 사용해 직접 쿼리를 작성
+        - jpa와 jdbc로 분리하여 작성
+          - jpa와 jdbc로 분리하여 테스트 해보는 것은 공부가 부족함 jpa와 jdbc에 대한 적당한 공부 후 간단한 게시판 만들기로 테스트 하기
   5. gitlab 소셜 로그인 기능 추가하기
       - gitlab oauth2를 이용한 로그인 인증처리 (https://docs.gitlab.com/ee/api/oauth2.html)
         - gitlab 인증 요청을 보내는 API ```/auth/gitlab/authorize``` 의 내부 로직
@@ -25,8 +30,5 @@
       - OpenApi와 swagger-ui를 적용
   7. 예외처리
       - 각 종 예외에 대한 응답 구현
-  8. ~~Repository~~
-      - ObjectMapper, jdbctemplate 라이브러리 의존성 추가
-      - jpa 대신 jdbctemplate 사용해 직접 쿼리를 작성
-        - jpa와 jdbc로 분리하여 작성
-          - jpa와 jdbc로 분리하여 테스트 해보는 것은 공부가 부족함 jpa와 jdbc에 대한 적당한 공부 후 간단한 게시판 만들기로 테스트 하기
+  8. 사용할 무료 대시보드 수정 및 적용하기
+      - 출처: [Admin-LTE](https://github.com/ColorlibHQ/AdminLTE)
