@@ -21,7 +21,6 @@ dependencies {
 	implementation('org.thymeleaf.extras:thymeleaf-extras-springsecurity5')
 	implementation(group: 'nz.net.ultraq.thymeleaf', name: 'thymeleaf-layout-dialect', version: '2.5.3')
 	implementation('org.gitlab4j:gitlab4j-api:4.17.0')
-//	implementation(group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.4')
 	implementation('org.springframework.boot:spring-boot-configuration-processor:2.5.2')
 	implementation('org.springdoc:springdoc-openapi-ui:1.5.9')
 	compileOnly('org.projectlombok:lombok')
