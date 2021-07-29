@@ -15,7 +15,7 @@
       - jpa 테스트 코드를 작성하는데 테스트 코드에 있지도 않은 passwordencoder의 빈을 찾을 수 없다는 에러가 계속 발생함
         - TestConfig 클래스를 생성하고 passwordencoder를 bean으로 등록한 뒤 Import 어노테이션을 이용해 TestConfig 클래스를 import하여 에러 해결
           - 왜 이러한 문제가 발생하는지 문제점 
-      - jpa 대신 jdbctemplate 사용해 직접 쿼리를 작성
+      - ~~jpa 대신 jdbctemplate 사용해 직접 쿼리를 작성~~
         - jpa와 jdbc로 분리하여 작성
           - jpa와 jdbc로 분리하여 테스트 해보는 것은 공부가 부족함 jpa와 jdbc에 대한 적당한 공부 후 간단한 게시판 만들기로 테스트 하기
   5. gitlab 소셜 로그인 기능 추가하기
