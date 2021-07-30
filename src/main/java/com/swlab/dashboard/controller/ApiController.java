@@ -27,20 +27,32 @@ public class ApiController {
         gitLabApi.setRequestTimeout(1000, 5000);
     }
 
-    @GetMapping("/users/{email}")
-    public ApiResult<List<User>> getUsers(@PathVariable String email) throws GitLabApiException {
+    @GetMapping("/gitlab/version")
+    public ApiResult<GitLabApi.ApiVersion> getGitLabApiVersion() {
+        setGitLabApi();
+        return success(gitLabApi.getApiVersion());
+    }
+
+    @GetMapping("/gitlab/users{email}")
+    public ApiResult<List<User>> getGitLabUsersByEmail(@PathVariable String email) throws GitLabApiException {
         setGitLabApi();
         return success(gitLabApi.getUserApi().findUsers(email));
     }
 
-    @GetMapping("/projects")
-    public ApiResult<List<Project>> getProjects() throws GitLabApiException {
+    @GetMapping("/gitlab/users")
+    public ApiResult<List<User>> getGitLabUsers() throws GitLabApiException {
+        setGitLabApi();
+        return success(gitLabApi.getUserApi().getActiveUsers());
+    }
+
+    @GetMapping("/gitlab/projects")
+    public ApiResult<List<Project>> getGitLabProjects() throws GitLabApiException {
         setGitLabApi();
         return success(gitLabApi.getProjectApi().getProjects());
     }
 
-    @GetMapping("/projects/{search}")
-    public ApiResult<List<Project>> getProjects(@PathVariable String search) throws GitLabApiException {
+    @GetMapping("/gitlab/projects/{search}")
+    public ApiResult<List<Project>> getGitLabProjectsBySearch(@PathVariable String search) throws GitLabApiException {
         setGitLabApi();
         return success(gitLabApi.getProjectApi().getProjects(search));
     }
