@@ -9,7 +9,10 @@
             -> 해결방법 : excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE,classes = {SecurityConfiguration.class}) 라는 코드를 추가하여 해결 
                 -> 위 문제를 해결한 후 UserRepository Bean을 찾을 수 없다고 함.
                     -> 원인 : 앱 실행 시 테스트를 위한 user를 생성 해 두기 위해 DashboardApplication 클래스에 runner 라는 메서드를 빈으로 등록하였고 해당 메서드에서 UserRepository를 사용함
-                    -> 해결방법 :  
+                    -> 해결방법 : 해당 runner 메서드를 없애거나, Testconfig에 UserRepository, UserRoleRepository, PasswordEncoder를 추가 해야함
+                        -> 401 Unauthorized 에러 발생
+                            -> 원인 : 해당 URL에 접근 하기위해서 권한이 필요
+                            -> 해결방법 : 테스트 메서드에 @WithMockUser("User") 어노테이션 추가함으로써 USER 권한을 줌
                 
 
 ## @DataJpaTest
