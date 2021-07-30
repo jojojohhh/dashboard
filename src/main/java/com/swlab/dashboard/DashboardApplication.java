@@ -22,12 +22,12 @@ public class DashboardApplication {
 		SpringApplication.run(DashboardApplication.class, args);
 	}
 
-	@Bean
-	public CommandLineRunner runner(UserRepository userRepository, UserRoleRepository userRoleRepository, PasswordEncoder passwordEncoder) {
-		return (args -> {
-			User user = User.builder().email("qwer@qwer.qwer").password(passwordEncoder.encode("1234")).name("jo").phoneNo("01028788714").build();
-			userRepository.save(user);
-			userRoleRepository.save(UserRole.builder().user(user).roleType(UserRole.RoleType.USER).build());
-		});
-	}
+//	@Bean
+//	public CommandLineRunner runner(UserRepository userRepository, UserRoleRepository userRoleRepository, PasswordEncoder passwordEncoder) {
+//		return (args -> {
+//			User user = User.builder().email("qwer@qwer.qwer").password(passwordEncoder.encode("1234")).name("jo").phoneNo("01028788714").build();
+//			userRepository.save(user);
+//			userRoleRepository.save(UserRole.builder().user(user).roleType(UserRole.RoleType.USER).build());
+//		});
+//	}
 }
