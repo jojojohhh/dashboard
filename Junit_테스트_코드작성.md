@@ -1,6 +1,7 @@
 # Junit5를 사용하여 테스트 코드 작성시에 만난 문제점들과 해결방법
 
 ## @SpringBootTest
+    - 통합 테스트시 사용되는 어노테이션 @SpringBootApplication 을 찾아간 뒤 모든 Bean을 스캔함
 
 ## @WebMvcTest
     1. ApiController
