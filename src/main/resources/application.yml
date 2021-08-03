@@ -11,6 +11,7 @@ spring:
     cache: false
   mvc:
     static-path-pattern: /static/**
+    throw-exception-if-no-handler-found: true
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     show-sql: true
