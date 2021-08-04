@@ -15,4 +15,13 @@ public class ApiResult<T> {
         this.response = response;
         this.apiError = apiError;
     }
+
+    @Override
+    public String toString() {
+        return "ApiResult{" +
+                "success=" + success +
+                ", response=" + response +
+                ", apiError=" + apiError +
+                '}';
+    }
 }
