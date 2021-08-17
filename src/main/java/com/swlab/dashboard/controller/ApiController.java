@@ -7,11 +7,16 @@ import lombok.RequiredArgsConstructor;
 
 import org.gitlab4j.api.GitLabApi;
 import org.gitlab4j.api.GitLabApiException;
+import org.gitlab4j.api.models.Commit;
 import org.gitlab4j.api.models.Project;
 import org.gitlab4j.api.models.User;
 
+import org.gitlab4j.api.utils.ISO8601;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import static com.swlab.dashboard.utils.ApiUtils.success;
@@ -46,5 +51,22 @@ public class ApiController {
     @GetMapping("/gitlab/projects/{search}")
     public ApiResult<List<Project>> getGitLabProjectsBySearch(@PathVariable String search) throws GitLabApiException {
         return success(gitLabService.getGitLabApi().getProjectApi().getProjects(search));
+    }
+
+    @GetMapping("/gitlab/commits")
+    public ApiResult getGitLabCommits() throws GitLabApiException {
+        List<Project> projects = gitLabService.getGitLabApi().getProjectApi().getProjects();
+        for (Project project : projects) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(new Date());
+            calendar.set(Calendar.HOUR_OF_DAY, 0);
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.SECOND, 0);
+            calendar.set(Calendar.MILLISECOND, 0);
+            for (int i = 1; i <7; i++) {
+
+            }
+        }
+        return success(projects);
     }
 }
