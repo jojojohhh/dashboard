@@ -30,5 +30,7 @@
       - OpenApi와 swagger-ui를 적용
   7. 예외처리
       - 각 종 예외에 대한 응답 구현
-  8. 사용할 무료 대시보드 수정 및 적용하기
+  8. 데이터베이스
+      - MYSQL
+  9. 사용할 무료 대시보드 수정 및 적용하기
       - 출처: [Admin-LTE](https://github.com/ColorlibHQ/AdminLTE)
