@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.gitlab4j.api.GitLabApi;
 import org.gitlab4j.api.GitLabApiException;
 import org.gitlab4j.api.models.Commit;
+import org.gitlab4j.api.models.Issue;
 import org.gitlab4j.api.models.Project;
 import org.gitlab4j.api.models.User;
 
@@ -51,6 +52,11 @@ public class ApiController {
     @GetMapping("/gitlab/projects/{search}")
     public ApiResult<List<Project>> getGitLabProjectsBySearch(@PathVariable String search) throws GitLabApiException {
         return success(gitLabService.getGitLabApi().getProjectApi().getProjects(search));
+    }
+
+    @GetMapping("/gitlab/issue")
+    public ApiResult<List<Issue>> getGitLabIssue() throws GitLabApiException {
+        return success(gitLabService.getGitLabApi().getIssuesApi().getIssues());
     }
 
     @GetMapping("/gitlab/commits")
