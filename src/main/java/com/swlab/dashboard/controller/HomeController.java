@@ -2,6 +2,7 @@ package com.swlab.dashboard.controller;
 
 import com.swlab.dashboard.service.GitLabService;
 import lombok.RequiredArgsConstructor;
+import org.gitlab4j.api.GitLabApiException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,8 +16,8 @@ public class HomeController {
     private final GitLabService gitLabService;
 
     @GetMapping(value = {"", "/dashboard"})
-    public String getDashboard(Model model) {
-        model.addAttribute("dailyCommit", gitLabService.getGitLabApi().getCommitsApi());
+    public String getDashboard(Model model) throws GitLabApiException {
+        model.addAttribute("activeProjects", gitLabService.getGitLabApi().getProjectApi().getProjects(1, 5));
         return "index";
     }
 
