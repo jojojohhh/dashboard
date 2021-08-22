@@ -28,6 +28,7 @@
       - gitlab personalAccessToken, url을 application-gitlab.yml에 저장
       - GitLabProperties.class로 프로퍼티를 받아옴
       - OpenApi와 swagger-ui를 적용
+      - 각 차트에 맞는 데이터를 불러오기 위한 GitLab API 호출시에 유저 id 또는 프로젝트 id 와 같은 정보가 필요함
   7. 예외처리
       - 각 종 예외에 대한 응답 구현
   8. 데이터베이스
