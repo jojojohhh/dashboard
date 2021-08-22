@@ -15,6 +15,7 @@ import org.gitlab4j.api.models.User;
 import org.gitlab4j.api.utils.ISO8601;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -57,6 +58,11 @@ public class ApiController {
     @GetMapping("/gitlab/issue")
     public ApiResult<List<Issue>> getGitLabIssue() throws GitLabApiException {
         return success(gitLabService.getGitLabApi().getIssuesApi().getIssues());
+    }
+
+    @GetMapping("/gitlab/userinfo")
+    public ApiResult<User> getGitLabUserInfo(Principal principal) throws GitLabApiException {
+        return success(gitLabService.getGitLabApi().getUserApi().findUsers(principal.getName()).get(0));
     }
 
     @GetMapping("/gitlab/commits")
