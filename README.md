@@ -29,6 +29,7 @@
       - GitLabProperties.class로 프로퍼티를 받아옴
       - OpenApi와 swagger-ui를 적용
       - 각 차트에 맞는 데이터를 불러오기 위한 GitLab API 호출시에 유저 id 또는 프로젝트 id 와 같은 정보가 필요함
+        - 각 유저가 속해있는 프로젝트에 대한 커밋 수를 조회 하기 위해서는 GitLab4J API에서 제공하는 getUserProjects라는 메서드를 호출하여 조회가능하나 유저 id와 ProjectFilter를 매개변수로 받기 때문에 ProjectFilter를 어떻게 사용하며, 어떻게 필터링 할 것인지 정해야함
   7. 예외처리
       - 각 종 예외에 대한 응답 구현
   8. 데이터베이스
