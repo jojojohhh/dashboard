@@ -7,18 +7,13 @@ import lombok.RequiredArgsConstructor;
 
 import org.gitlab4j.api.GitLabApi;
 import org.gitlab4j.api.GitLabApiException;
-import org.gitlab4j.api.models.Commit;
-import org.gitlab4j.api.models.Issue;
-import org.gitlab4j.api.models.Project;
-import org.gitlab4j.api.models.User;
+import org.gitlab4j.api.Pager;
+import org.gitlab4j.api.models.*;
 
-import org.gitlab4j.api.utils.ISO8601;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import static com.swlab.dashboard.utils.ApiUtils.success;
@@ -55,30 +50,29 @@ public class ApiController {
         return success(gitLabService.getGitLabApi().getProjectApi().getProjects(search));
     }
 
+    @GetMapping("/gitlab/commit")
+    public ApiResult<List<Commit>> getGitLabCommit() throws GitLabApiException {
+        List<Project> projects = gitLabService.getGitLabApi().getProjectApi().getProjects();
+        List<Commit> commits = new ArrayList<>();
+
+        for (Project project: projects) {
+            commits.addAll(gitLabService.getGitLabApi().getCommitsApi().getCommits(project.getId()));
+        }
+        return success(commits);
+    }
+
     @GetMapping("/gitlab/issue")
-    public ApiResult<List<Issue>> getGitLabIssue() throws GitLabApiException {
+    public ApiResult<List<Issue>> getGitLabIssue(Principal principal) throws GitLabApiException {
         return success(gitLabService.getGitLabApi().getIssuesApi().getIssues());
+    }
+
+    @GetMapping("/gitlab/group")
+    public ApiResult<List<Group>> getGitLabGroup() throws GitLabApiException {
+        return success(gitLabService.getGitLabApi().getGroupApi().getGroups());
     }
 
     @GetMapping("/gitlab/userinfo")
     public ApiResult<User> getGitLabUserInfo(Principal principal) throws GitLabApiException {
         return success(gitLabService.getGitLabApi().getUserApi().findUsers(principal.getName()).get(0));
-    }
-
-    @GetMapping("/gitlab/commits")
-    public ApiResult getGitLabCommits() throws GitLabApiException {
-        List<Project> projects = gitLabService.getGitLabApi().getProjectApi().getProjects();
-        for (Project project : projects) {
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(new Date());
-            calendar.set(Calendar.HOUR_OF_DAY, 0);
-            calendar.set(Calendar.MINUTE, 0);
-            calendar.set(Calendar.SECOND, 0);
-            calendar.set(Calendar.MILLISECOND, 0);
-            for (int i = 1; i <7; i++) {
-
-            }
-        }
-        return success(projects);
     }
 }
