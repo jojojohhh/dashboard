@@ -18,10 +18,12 @@ public class ApiResult<T> {
 
     @Override
     public String toString() {
-        return "ApiResult{" +
+        return "ApiResult : {" +
                 "success=" + success +
-                ", response=" + response +
-                ", apiError=" + apiError +
-                '}';
+                "response=" + response +
+                "apiError={" +
+                "message : " + apiError.getMessage() +
+                "status : " + apiError.getStatus() +
+                "}";
     }
 }
