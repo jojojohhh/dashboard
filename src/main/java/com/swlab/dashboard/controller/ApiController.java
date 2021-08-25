@@ -52,12 +52,14 @@ public class ApiController {
 
     @GetMapping("/gitlab/commit")
     public ApiResult<List<Commit>> getGitLabCommit() throws GitLabApiException {
-        List<Project> projects = gitLabService.getGitLabApi().getProjectApi().getProjects();
+        GitLabApi gitLabApi = gitLabService.getGitLabApi();
+        List<Project> projects = gitLabApi.getProjectApi().getProjects();
         List<Commit> commits = new ArrayList<>();
 
         for (Project project: projects) {
-            commits.addAll(gitLabService.getGitLabApi().getCommitsApi().getCommits(project.getId()));
+            commits.addAll(gitLabApi.getCommitsApi().getCommits(project.getId()));
         }
+        gitLabService.getMonthlyCommitCount();
         return success(commits);
     }
 

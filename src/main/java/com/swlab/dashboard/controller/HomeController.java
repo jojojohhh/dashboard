@@ -18,6 +18,7 @@ public class HomeController {
     @GetMapping(value = {"", "/dashboard"})
     public String getDashboard(Model model) throws GitLabApiException {
         model.addAttribute("activeProjects", gitLabService.getGitLabApi().getProjectApi().getProjects(1, 5));
+        model.addAttribute("monthlyCommitCnt", gitLabService.getMonthlyCommitCount());
         return "index";
     }
 
