@@ -37,3 +37,6 @@
       - MYSQL
   9. 사용할 무료 대시보드 수정 및 적용하기
       - 출처: [Admin-LTE](https://github.com/ColorlibHQ/AdminLTE)
+      - 차트는 Chart.js 사용
+      - 각 데이터들을 차트로 출력하기 위해서는 Controller 에서 데이터를 넘겨주는것, 자바스크립트 ajax를 사용하여 API를 호출해 JSON 데이터를 가져오는 것 두 가지 방법이 있다.
+        - Controller 에서 데이터를 넘겨 주어서 처리하는 방법 ajax를 사용하여 처리하는 방법 둘다 사용
