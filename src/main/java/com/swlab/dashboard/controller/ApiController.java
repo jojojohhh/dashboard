@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static com.swlab.dashboard.utils.ApiUtils.success;
 
@@ -63,7 +64,7 @@ public class ApiController {
     }
 
     @GetMapping("/gitlab/commit/monthly-count")
-    public ApiResult<List<Integer>> getGitLabMonthlyCommitCount() throws GitLabApiException {
+    public ApiResult<Map<Integer, Integer>> getGitLabMonthlyCommitCount() throws GitLabApiException {
         return success(gitLabService.getMonthlyCommitCount());
     }
 

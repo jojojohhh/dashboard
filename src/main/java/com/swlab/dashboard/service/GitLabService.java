@@ -26,7 +26,7 @@ public class GitLabService {
         return gitLabApi;
     }
 
-    public List<Integer> getMonthlyCommitCount() throws GitLabApiException {
+    public Map<Integer, Integer> getMonthlyCommitCount() throws GitLabApiException {
         gitLabApi = getGitLabApi();
         List<Project> projects = gitLabApi.getProjectApi().getProjects();
         List<Commit> commits = new ArrayList<>();
@@ -46,9 +46,7 @@ public class GitLabService {
         calendar.set(Calendar.MILLISECOND, 0);
         calendar.get(Calendar.MONTH);
 
-        List<Integer> montlyCommitCnt = new ArrayList();
-
-        for (int i = 0; i < 12; i++)    montlyCommitCnt.add(0);
+        Map<Integer, Integer> commitCntMap = new HashMap<>();
 
         for (int i = 0; i < 12; i++) {
             int month = calendar.get(Calendar.MONTH);
@@ -58,9 +56,9 @@ public class GitLabService {
                 commits.remove(commits.size() - 1);
                 cnt++;
             }
-            montlyCommitCnt.set(month, cnt);
+            commitCntMap.put(month + 1, cnt);
             calendar.add(Calendar.MONTH, -1);
         }
-        return montlyCommitCnt;
+        return commitCntMap;
     }
 }
