@@ -182,13 +182,35 @@
       <th:block th:replace="fragment/pages/footer :: footer"></th:block>
     </div>
     <th:block th:replace="fragment/pages/footer :: script">
-      <script>
+      <script type="application/javascript">
         $(function () {
-          const $commitChart = $('#commit-chart')
-          const commitChart = new Chart($commitChart, {
 
-          })
-        })
+          console.log("test");
+
+          const header = $("meta[name='_csrf_header']").attr("content");
+          const token = $("meta[name='_csrf']").attr("content");
+
+          const $data = $.ajax({
+            type : 'GET',
+            url : '/gitlab/commit/monthly-count',
+            // beforeSend : function (xhr) {
+            //   xhr.setRequestHeader(header, token);
+            // },
+            success : function (data) {
+              console.log(data);
+            },
+            error : function (err) {
+              alert(err);
+            }
+          });
+
+          console.log($data);
+
+          const $commitChart = $('#commit-chart')
+          // const commitChart = new Chart($commitChart, {
+          //
+          // })
+        });
       </script>
     </th:block>
   </body>
