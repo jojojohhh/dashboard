@@ -181,37 +181,71 @@
       <!-- /.content-wrapper -->
       <th:block th:replace="fragment/pages/footer :: footer"></th:block>
     </div>
-    <th:block th:replace="fragment/pages/footer :: script">
-      <script type="application/javascript">
-        $(function () {
+    <th:block th:replace="fragment/pages/footer :: script"></th:block>
 
-          console.log("test");
+    <script>
+      $(function () {
 
-          const header = $("meta[name='_csrf_header']").attr("content");
-          const token = $("meta[name='_csrf']").attr("content");
-
-          const $data = $.ajax({
-            type : 'GET',
-            url : '/gitlab/commit/monthly-count',
-            // beforeSend : function (xhr) {
-            //   xhr.setRequestHeader(header, token);
-            // },
-            success : function (data) {
-              console.log(data);
-            },
-            error : function (err) {
-              alert(err);
-            }
-          });
-
-          console.log($data);
-
-          const $commitChart = $('#commit-chart')
-          // const commitChart = new Chart($commitChart, {
-          //
-          // })
+        $.ajax({
+          type : 'GET',
+          url : '/api/v1/gitlab/commit/monthly-count',
+          success : function (data) {
+            const $commitChart = $('#commit-chart')
+            const commitChart = new Chart($commitChart, {
+              type : 'bar',
+              data : {
+                labels : ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
+                datasets: [
+                  {
+                    backgroundColor: '#007bff',
+                    borderColor: '#007bff',
+                    data: [data.response[1], data.response[2], data.response[3], data.response[4], data.response[5], data.response[6],
+                      data.response[7], data.response[8], data.response[9], data.response[10], data.response[11], data.response[12]]
+                  }
+                ]
+              },
+              options: {
+                maintainAspectRatio: false,
+                tooltips: {
+                  mode: 'index',
+                  intersect: true
+                },
+                hover: {
+                  mode: 'index',
+                  intersect: true
+                },
+                legend: {
+                  display: false
+                },
+                scales: {
+                  yAxes: [{
+                    // display: false,
+                    gridLines: {
+                      display: true,
+                      lineWidth: '4px',
+                      color: 'rgba(0, 0, 0, .2)',
+                      zeroLineColor: 'transparent'
+                    },
+                  }],
+                  xAxes: [{
+                    display: true,
+                    gridLines: {
+                      display: false
+                    },
+                    ticks: {
+                      fontColor: '#495057',
+                      fontStyle: 'bold'
+                    }
+                  }]
+                }
+              }
+            })
+          },
+          error : function (err) {
+            alert(err);
+          }
         });
-      </script>
-    </th:block>
+      });
+    </script>
   </body>
 </html>
