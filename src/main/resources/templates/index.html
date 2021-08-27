@@ -39,7 +39,7 @@
                 <div class="card">
                   <div class="card-header border-0">
                     <div class="d-flex justify-content-between">
-                      <h3 class="card-title">Created Projects</h3>
+                      <h3 class="card-title">Created Projects This Week</h3>
                     </div>
                   </div>
                   <div class="card-body">
@@ -47,18 +47,9 @@
                     <!-- /.d-flex -->
 
                     <div class="position-relative mb-4">
-                      <canvas id="visitors-chart" height="200"></canvas>
+                      <canvas id="created-projects" height="200"></canvas>
                     </div>
 
-                    <div class="d-flex flex-row justify-content-end">
-                        <span class="mr-2">
-                          <i class="fas fa-square text-primary"></i> This Week
-                        </span>
-
-                      <span>
-                          <i class="fas fa-square text-gray"></i> Last Week
-                        </span>
-                    </div>
                   </div>
                 </div>
                 <!-- /.card -->
@@ -188,6 +179,71 @@
 
         $.ajax({
           type : 'GET',
+          url : '/api/v1/gitlab/projects/recent-created',
+          success : function (data) {
+            const $createdProjects = $('#created-projects')
+            const createdProjects = new Chart($createdProjects, {
+              data: {
+                labels: ['SUN', 'MON', 'TUS', 'WED', 'TUR', 'FRI', 'SAT'],
+                datasets: [{
+                  type: 'line',
+                  data: [data.response[1], data.response[2], data.response[3], data.response[4], data.response[5], data.response[6], data.response[7]],
+                  backgroundColor: 'transparent',
+                  borderColor: '#007bff',
+                  pointBorderColor: '#007bff',
+                  pointBackgroundColor: '#007bff',
+                  fill: false
+                }]
+              },
+              options: {
+                maintainAspectRatio: false,
+                tooltips: {
+                  mode: 'index',
+                  intersect: true
+                },
+                hover: {
+                  mode: 'index',
+                  intersect: true
+                },
+                legend: {
+                  display: false
+                },
+                scales: {
+                  yAxes: [{
+                    gridLines: {
+                      display: true,
+                      lineWidth: '4px',
+                      color: 'rgba(0, 0, 0, .2)',
+                      zeroLineColor: 'transparent'
+                    },
+                    ticks: $.extend({
+                      beginAtZero: true,
+                    }, {
+                      fontColor: '#495057',
+                      fontStyle: 'bold'
+                    })
+                  }],
+                  xAxes: [{
+                    display: true,
+                    gridLines: {
+                      display: false
+                    },
+                    ticks: {
+                      fontColor: '#495057',
+                      fontStyle: 'bold'
+                    }
+                  }]
+                }
+              }
+            })
+          },
+          error : function (err) {
+            alert(err);
+          }
+        });
+
+        $.ajax({
+          type : 'GET',
           url : '/api/v1/gitlab/commit/monthly-count',
           success : function (data) {
             const $commitChart = $('#commit-chart')
@@ -219,7 +275,6 @@
                 },
                 scales: {
                   yAxes: [{
-                    // display: false,
                     gridLines: {
                       display: true,
                       lineWidth: '4px',
