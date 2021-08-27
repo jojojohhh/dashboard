@@ -9,6 +9,7 @@ import org.gitlab4j.api.models.Project;
 
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -35,16 +36,10 @@ public class GitLabService {
             commits.addAll(gitLabApi.getCommitsApi().getCommits(project.getId()));
         }
 
-        commits.sort((o1, o2) -> o1.getCommittedDate().compareTo(o2.getCommittedDate()));
+        commits.sort(Comparator.comparing(Commit::getCommittedDate));
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(new Date());
+        Calendar calendar = getMidnightCalendar(new Date());
         calendar.set(Calendar.DATE, 1);
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-        calendar.get(Calendar.MONTH);
 
         Map<Integer, Integer> commitCntMap = new HashMap<>();
 
@@ -60,5 +55,39 @@ public class GitLabService {
             calendar.add(Calendar.MONTH, -1);
         }
         return commitCntMap;
+    }
+
+    public Map<Integer, Integer> getProjectsCreatedThisWeek() throws GitLabApiException {
+        gitLabApi = getGitLabApi();
+
+        List<Project> projects = gitLabApi.getProjectApi().getProjects();
+        projects.sort(Comparator.comparing(Project::getCreatedAt));
+
+        Calendar calendar = getMidnightCalendar(new Date());
+
+        Map<Integer, Integer> createdProjectsCnt = new HashMap<>();
+        for (int i = 0; i < 7; i++) {
+            int day = calendar.get(Calendar.DAY_OF_WEEK);
+            int cnt = 0;
+            while (true) {
+                if (calendar.getTime().compareTo(projects.get(projects.size() - 1).getCreatedAt()) > 0) break;
+                projects.remove(projects.size() - 1);
+                cnt++;
+            }
+            createdProjectsCnt.put(day, cnt);
+            calendar.add(Calendar.DATE, -1);
+        }
+        return createdProjectsCnt;
+    }
+
+    public static Calendar getMidnightCalendar(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        calendar.get(Calendar.MONTH);
+        return calendar;
     }
 }

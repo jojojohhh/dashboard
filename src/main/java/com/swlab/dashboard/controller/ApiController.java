@@ -7,12 +7,12 @@ import lombok.RequiredArgsConstructor;
 
 import org.gitlab4j.api.GitLabApi;
 import org.gitlab4j.api.GitLabApiException;
-import org.gitlab4j.api.Pager;
 import org.gitlab4j.api.models.*;
 
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +44,11 @@ public class ApiController {
     @GetMapping("/gitlab/projects")
     public ApiResult<List<Project>> getGitLabProjects() throws GitLabApiException {
         return success(gitLabService.getGitLabApi().getProjectApi().getProjects());
+    }
+
+    @GetMapping("/gitlab/projects/recent-created")
+    public ApiResult<Map<Integer, Integer>> getRecentCreatedProjects() throws GitLabApiException {
+        return success(gitLabService.getProjectsCreatedThisWeek());
     }
 
     @GetMapping("/gitlab/projects/{search}")
