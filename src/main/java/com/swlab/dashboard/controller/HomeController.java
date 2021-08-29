@@ -8,6 +8,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 @Controller
 @RequestMapping("/home")
 @RequiredArgsConstructor
@@ -33,7 +36,9 @@ public class HomeController {
     }
 
     @GetMapping("/projects")
-    public String getProjects() {
+    public String getProjects(Model model) throws GitLabApiException {
+        model.addAttribute("projects", gitLabService.getGitLabApi().getProjectApi().getProjects());
+        model.addAttribute("dateFormat", new SimpleDateFormat("yyyy-MM-dd"));
         return "pages/projects/projects";
     }
 
