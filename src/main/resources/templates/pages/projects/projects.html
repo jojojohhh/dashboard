@@ -70,9 +70,7 @@
                           </thead>
                           <tbody>
                               <tr th:each="project, index : ${projects}">
-                                  <td>
-                                      #
-                                  </td>
+                                  <td th:text="${index.index}"></td>
                                   <td>
                                       <a th:text="${project.getName()}"></a>
                                       <br/>
