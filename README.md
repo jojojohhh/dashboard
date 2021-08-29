@@ -24,7 +24,7 @@
           - ```https://gitlab.example.com/oauth/authorize?client_id=APP_ID&redirect_uri=REDIRECT_URI&response_type=code&state=STATE&scope=REQUESTED_SCOPES&code_challenge=CODE_CHALLENGE&code_challenge_method=S256``` 와 같이 gitlab에 인증 요청을 보내고 redirect Uri으로 결과를 받음
         - gitlab 인증 결과를 받는 API ```/auth/gitlab/callback``` 
   6. API 작성하기
-      - GitLab4J API GitLab API Java Client (https://github.com/gitlab4j/gitlab4j-api) 라이브러리 의존성 추가
+      - GitLab4J API GitLab API Java Client (https://github.com/gitlab4j/gitlab4j-api) 오픈소스 의존성 추가
       - gitlab personalAccessToken, url을 application-gitlab.yml에 저장
       - GitLabProperties.class로 프로퍼티를 받아옴
       - OpenApi와 swagger-ui를 적용
