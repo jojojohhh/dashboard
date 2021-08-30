@@ -74,9 +74,13 @@ public class ApiController {
     }
 
     @GetMapping("/gitlab/issue")
-    public ApiResult<Issue> getGitLabIssue(Principal principal) throws GitLabApiException {
-        gitLabService.getGitLabApi().getIssuesApi().getIssues();
-        return success(gitLabService.getGitLabApi().getIssuesApi().getIssue(6, 3));
+    public ApiResult<List<Issue>> getGitLabIssue(Principal principal) throws GitLabApiException {
+        return success(gitLabService.getGitLabApi().getIssuesApi().getIssues());
+    }
+
+    @GetMapping("/gitlab/project/{id}/issues")
+    public ApiResult<List<Issue>> getGitLabIssuesByProject(@PathVariable String id) throws GitLabApiException {
+        return success(gitLabService.getGitLabApi().getIssuesApi().getIssues(id));
     }
 
     @GetMapping("/gitlab/group")
