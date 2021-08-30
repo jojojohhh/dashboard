@@ -2,14 +2,22 @@ package com.swlab.dashboard.controller;
 
 import com.swlab.dashboard.service.GitLabService;
 import lombok.RequiredArgsConstructor;
+import org.gitlab4j.api.Constants;
 import org.gitlab4j.api.GitLabApiException;
+import org.gitlab4j.api.models.Commit;
+import org.gitlab4j.api.models.Issue;
+import org.gitlab4j.api.models.Project;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/home")
@@ -17,6 +25,8 @@ import java.util.Calendar;
 public class HomeController {
 
     private final GitLabService gitLabService;
+
+    private final SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
     @GetMapping(value = {"", "/dashboard"})
     public String getDashboard(Model model) throws GitLabApiException {
@@ -38,7 +48,7 @@ public class HomeController {
     @GetMapping("/projects")
     public String getProjects(Model model) throws GitLabApiException {
         model.addAttribute("projects", gitLabService.getGitLabApi().getProjectApi().getProjects());
-        model.addAttribute("dateFormat", new SimpleDateFormat("yyyy-MM-dd"));
+        model.addAttribute("dateFormat", df);
         return "pages/projects/projects";
     }
 
@@ -47,8 +57,20 @@ public class HomeController {
         return "pages/projects/project-add";
     }
 
-    @GetMapping("/project-detail")
-    public String getProjectDetail() {
+    @GetMapping("/{id}/project-detail")
+    public String getProjectDetail(@PathVariable String id, Model model) throws GitLabApiException {
+        Project project = gitLabService.getGitLabApi().getProjectApi().getProject(id);
+        List<Commit> commits = gitLabService.getGitLabApi().getCommitsApi().getCommits(id);
+        List<Issue> issues = gitLabService.getGitLabApi().getIssuesApi().getIssues(id);
+
+        commits.sort(Comparator.comparing(Commit::getCommittedDate));
+
+        model.addAttribute("project", project);
+        model.addAttribute("date", df);
+        model.addAttribute("commits", commits.stream().limit(3).collect(Collectors.toList()));
+        model.addAttribute("issuesCnt", issues.size());
+        model.addAttribute("openedIssuesCnt", issues.stream().filter(issue -> issue.getState().equals(Constants.IssueState.OPENED)).collect(Collectors.toList()).size());
+
         return "pages/projects/project-detail";
     }
 
