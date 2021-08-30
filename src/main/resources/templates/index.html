@@ -82,7 +82,7 @@
                           <td th:text="${activeProject.getLastActivityAt()}"></td>
                           <td th:text="${activeProject.getDescription()}"></td>
                           <td>
-                            <a th:href="${activeProject.getWebUrl()}" class="text-muted">
+                            <a th:href="|/home/${activeProject.getId()}/project-detail|" class="text-muted">
                               <i class="fas fa-search"></i>
                             </a>
                           </td>

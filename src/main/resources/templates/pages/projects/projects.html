@@ -79,7 +79,7 @@
                                   <td th:text="${project.getNamespace().getName()}"></td>
                                   <td th:text="${project.getDescription()}"></td>
                                   <td class="project-actions text-right">
-                                      <a class="btn btn-primary btn-sm" th:href="${project.getWebUrl()}">
+                                      <a class="btn btn-primary btn-sm" th:href="|/home/${project.getId()}/project-detail|">
                                           <i class="fas fa-folder">
                                           </i>
                                           More
