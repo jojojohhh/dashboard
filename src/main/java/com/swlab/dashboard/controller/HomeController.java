@@ -1,12 +1,15 @@
 package com.swlab.dashboard.controller;
 
 import com.swlab.dashboard.service.GitLabService;
+
 import lombok.RequiredArgsConstructor;
+
 import org.gitlab4j.api.Constants;
 import org.gitlab4j.api.GitLabApiException;
 import org.gitlab4j.api.models.Commit;
 import org.gitlab4j.api.models.Issue;
 import org.gitlab4j.api.models.Project;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,8 +17,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -63,7 +64,7 @@ public class HomeController {
         List<Commit> commits = gitLabService.getGitLabApi().getCommitsApi().getCommits(id);
         List<Issue> issues = gitLabService.getGitLabApi().getIssuesApi().getIssues(id);
 
-        commits.sort(Comparator.comparing(Commit::getCommittedDate));
+        commits.sort((o1, o2) -> o2.getCommittedDate().compareTo(o1.getCommittedDate()));
 
         model.addAttribute("project", project);
         model.addAttribute("date", df);
