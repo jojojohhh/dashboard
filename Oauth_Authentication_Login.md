@@ -12,9 +12,13 @@
 ## OAuth
     - OAuth에서의 Auth는 인증과 허가를 포함하고 있다. 하지만 주된 목적은 허가이다.
     - OAuth의 인증 과정
-        1. User는 Consumer에게 Request Token의 발급을 요청
-        2. Consumer는 Service Provider의 사용자 인증 페이지를 호출
-        3. User는 로그인 완료
-        4. Service Provider는 사용자의 권한 요청 및 수락
-        5. Consumer는 Access Token을 발급
+        1. Consumer가 Request Token 발급을 요청하고 Service Provider가 Request Token을 발급
+        2. Service Provider는 Request Token으로 사용할 oauth_token과 oauth_token_secret을 전달,
+           Access Token을 요청할 때는 oauth_token_secret을 사용한다.
+        3. Consumer는 oauth_token을 이용해 Service Provider가 정해놓은 사용자 인증 페이지를 User에게 보여주도록 한다.
+        4. User는 사용자 인증 페이지를 통해 인증을 마치면 Consumer가 oauth_callback에 지정한 URL로 리다이렉트 한다. 
+           이때 Service Provider는 새로운 oauth_token과 oauth_verifier를 Consumer에게 전달한다. 
+           이 값들은 Access Token을 요청할 때 사용한다.
+        5. Access Token 발급을 요청할 때는 Consumer Secret Key에 oauth_token_secret을 결합하여 oauth_token_sercret을 생성한다.
+           각 매개변수를 상황에 맞게 정의한 뒤 Access Token을 요청하면 oauth_token과 oauth_token_secret을 전달 받는다.
         6. User는 Access Token을 이용하여 서비스 정보 요청
