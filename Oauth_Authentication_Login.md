@@ -22,3 +22,11 @@
         5. Access Token 발급을 요청할 때는 Consumer Secret Key에 oauth_token_secret을 결합하여 oauth_token_sercret을 생성한다.
            각 매개변수를 상황에 맞게 정의한 뒤 Access Token을 요청하면 oauth_token과 oauth_token_secret을 전달 받는다.
         6. User는 Access Token을 이용하여 서비스 정보 요청
+
+## OAuth2를 이용한 로그인 및 회원가입
+    - 로그인 및 회원가입 과정
+        1. GitLab oauth2를 이용해 인증
+        2. response 데이터에 존재하는 email으로 중복 조회
+            2-1. 중복이 존재하지 않는다면 회원가입 페이지로 리다이렉트
+        3. 중복이 존재한다면 해당 User DB에 access token 값을 저장 후 메인 페이지로 리다이렉트
+            
