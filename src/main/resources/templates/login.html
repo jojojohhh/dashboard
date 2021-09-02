@@ -29,7 +29,9 @@
                             </a>
                             <hr class="my-4">
                             <button id="btn-gitlab" class="btn btn-lg btn-google btn-block text-uppercase" type="submit">
-                                <i class="fab fa-github"></i> Sign in with gitlab
+                                <a href="/oauth2/authorization/gitlab">
+                                    <i class="fab fa-github"></i> Sign in with gitlab
+                                </a>
                             </button>
                         </div>
                     </div>
@@ -64,19 +66,6 @@
                         alert("비밀번호를 입력하세요.");
                         return false;
                     }
-                    login_form.submit();
-                });
-
-                $("#btn-gitlab").on("click", function () {
-                    const email = $("input[name='email']").val(), password = $("input[name='password']").val();
-                    if (email == "") {
-                        alert("이 메일을 입력하세요.");
-                        return false;
-                    } else if (password == "") {
-                        alert("비밀번호를 입력하세요.");
-                        return false;
-                    }
-                    login_form.attr("action", "/auth/gitlab/authorize");
                     login_form.submit();
                 });
             });

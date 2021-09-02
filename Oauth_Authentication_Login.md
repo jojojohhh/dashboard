@@ -23,6 +23,9 @@
            각 매개변수를 상황에 맞게 정의한 뒤 Access Token을 요청하면 oauth_token과 oauth_token_secret을 전달 받는다.
         6. User는 Access Token을 이용하여 서비스 정보 요청
 
+## CommonOAuth2Provider
+
+
 ## OAuth2를 이용한 로그인 및 회원가입
     - 로그인 및 회원가입 과정
         1. GitLab oauth2를 이용해 인증
