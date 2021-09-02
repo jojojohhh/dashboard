@@ -33,6 +33,9 @@ public class User extends BaseEntity {
     @Column(length = 11, nullable = false)
     private String phoneNo;
 
+    @Column
+    private String picture;
+
     @Singular("userRoles")
     @JsonIgnoreProperties({"createTimeStamp", "del"})
     @JsonManagedReference
@@ -42,10 +45,11 @@ public class User extends BaseEntity {
 
 
     @Builder
-    public User(String email, String password, String name, String phoneNo) {
+    public User(String email, String password, String name, String phoneNo,UserRole userRole) {
         this.email = email;
         this.password = password;
         this.name = name;
         this.phoneNo = phoneNo;
+        this.userRoles.add(userRole);
     }
 }

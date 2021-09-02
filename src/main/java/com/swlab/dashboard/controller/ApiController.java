@@ -1,5 +1,6 @@
 package com.swlab.dashboard.controller;
 
+import com.swlab.dashboard.dto.UserDto;
 import com.swlab.dashboard.service.GitLabService;
 import com.swlab.dashboard.utils.ApiResult;
 

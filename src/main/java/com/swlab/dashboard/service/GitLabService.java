@@ -9,6 +9,7 @@ import org.gitlab4j.api.GitLabApiException;
 import org.gitlab4j.api.models.Commit;
 import org.gitlab4j.api.models.Project;
 
+import org.springframework.security.config.oauth2.client.CommonOAuth2Provider;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
@@ -27,10 +28,6 @@ public class GitLabService {
         gitLabApi = new GitLabApi(gitlabProperties.getUrl(), gitlabProperties.getPersonalAccessToken());
         gitLabApi.setRequestTimeout(1000, 5000);
         return gitLabApi;
-    }
-
-    public GitLabApi gitLabOauth2Login(UserDto userDto) throws GitLabApiException {
-        return GitLabApi.oauth2Login(gitlabProperties.getUrl(), userDto.getEmail(), userDto.getPassword());
     }
 
     public Map<Integer, Integer> getMonthlyCommitCount() throws GitLabApiException {
