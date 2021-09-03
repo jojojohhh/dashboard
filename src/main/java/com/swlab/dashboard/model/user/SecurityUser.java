@@ -1,9 +1,11 @@
 package com.swlab.dashboard.model.user;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -22,20 +24,22 @@ public class SecurityUser extends User implements UserDetails {
         setName(user.getName());
         setPhoneNo(user.getPhoneNo());
         setDel(user.isDel());
-        setUserRoles(user.getUserRoles());
+        setUserRole(user.getUserRole());
         this.accountNonExpired = true;
         this.accountNonLocked = true;
         this.credentialNonExpired =true;
         this.enabled = true;
     }
 
-    public Set<UserRole.RoleType> getRoleType() {
-        return getUserRoles().stream().map(f -> f.getRoleType()).collect(Collectors.toSet());
+    public UserRole getRoleType() {
+        return getUserRole();
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return getUserRoles();
+        Set<GrantedAuthority> auth = new HashSet<>();
+        auth.add(new SimpleGrantedAuthority(getUserRole().getKey()));
+        return auth;
     }
 
     @Override

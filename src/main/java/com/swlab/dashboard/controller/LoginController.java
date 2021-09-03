@@ -24,7 +24,7 @@ public class LoginController {
 
     @RequestMapping(value = {"", "/login"})
     public String getLogin(@AuthenticationPrincipal SecurityUser user, HttpServletRequest req, Model model) {
-        if (user != null && user.getRoleType().contains(UserRole.RoleType.USER)) {
+        if (user != null && user.getRoleType().getKey().equals(UserRole.USER.getKey())) {
             return "redirect:/home";
         }
         if (req.getAttribute("errorMsg") != null) {
@@ -56,7 +56,7 @@ public class LoginController {
             return res;
         }
 
-        res.put("success", userService.join(userDto) != null ? true : false);
+        res.put("success", userService.save(userDto) != null ? true : false);
         return res;
     }
 

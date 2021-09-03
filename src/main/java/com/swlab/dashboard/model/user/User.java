@@ -8,10 +8,8 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Where;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter @Setter
@@ -36,12 +34,9 @@ public class User extends BaseEntity {
     @Column
     private String picture;
 
-    @Singular("userRoles")
-    @JsonIgnoreProperties({"createTimeStamp", "del"})
-    @JsonManagedReference
-    @OneToMany(mappedBy = "user")
-    @Where(clause = "del = false")
-    private Set<UserRole> userRoles;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private UserRole userRole;
 
 
     @Builder
@@ -50,6 +45,6 @@ public class User extends BaseEntity {
         this.password = password;
         this.name = name;
         this.phoneNo = phoneNo;
-        this.userRoles.add(userRole);
+        this.userRole = userRole;
     }
 }

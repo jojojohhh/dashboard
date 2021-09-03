@@ -25,12 +25,7 @@ public class UserRepositoryTest {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private UserRoleRepository userRoleRepository;
-
     private User setUser;
-
-    private UserRole setUserRole;
 
     @BeforeAll
     public void setUp() {
@@ -39,11 +34,7 @@ public class UserRepositoryTest {
                 .password("test123")
                 .name("test")
                 .phoneNo("1234567890")
-                .build());
-
-        setUserRole = userRoleRepository.save(UserRole.builder()
-                .user(setUser)
-                .roleType(UserRole.RoleType.USER)
+                        .userRole(UserRole.USER)
                 .build());
     }
 
@@ -60,7 +51,7 @@ public class UserRepositoryTest {
 
     @Test
     public void findWithUserRolesByEmailAndDel_DelIsFalse() {
-        User user = userRepository.findWithUserRolesByEmailAndDel(setUser.getEmail(), false).get();
+        User user = userRepository.findWithUserRoleByEmailAndDel(setUser.getEmail(), false).get();
         Assertions.assertEquals(setUser.getEmail(), user.getEmail());
     }
 }

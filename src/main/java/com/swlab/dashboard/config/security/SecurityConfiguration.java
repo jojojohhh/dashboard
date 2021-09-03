@@ -62,24 +62,25 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
-                .authorizeRequests()
+                .headers().frameOptions().disable()
+                .and()
+                    .authorizeRequests()
                     .antMatchers("/login", "/", "/join", "/h2-console/**", "/denied", "/test", "/api/**", "/oauth2/**").permitAll()
-                    .antMatchers("/home/dashboard", "/home/**").hasAnyAuthority("ADMIN", "USER")
+                    .antMatchers("/home/dashboard", "/home/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
                     .anyRequest().authenticated()
-                    .and()
-                .formLogin()
+                .and()
+                    .formLogin()
                     .loginPage("/login")
                     .defaultSuccessUrl("/home", true)
                     .usernameParameter("email").passwordParameter("password")
                     .failureUrl("/login?error=true")
                     .failureHandler(authenticationFailureHandler())
-                    .and()
-                .exceptionHandling().accessDeniedHandler(customWebAccessDeniedHandler)
-                    .and()
-                .csrf().requireCsrfProtectionMatcher(new AntPathRequestMatcher("!/h2-console/**"))
-                    .and()
-                .authenticationProvider(authenticationProvider()).csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
-        http.headers().frameOptions().disable();
+                .and()
+                    .exceptionHandling().accessDeniedHandler(customWebAccessDeniedHandler)
+                .and()
+                    .csrf().requireCsrfProtectionMatcher(new AntPathRequestMatcher("!/h2-console/**"))
+                .and()
+                    .authenticationProvider(authenticationProvider()).csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
     }
 
     @Bean
