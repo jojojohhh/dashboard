@@ -2,7 +2,9 @@ package com.swlab.dashboard.config.security;
 
 import com.swlab.dashboard.config.security.handler.CustomAuthenticationFailureHandler;
 import com.swlab.dashboard.config.security.handler.CustomWebAccessDeniedHandler;
+import com.swlab.dashboard.config.security.oauth.CustomOAuth2UserService;
 import com.swlab.dashboard.service.SecurityUserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,22 +17,17 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final CustomWebAccessDeniedHandler customWebAccessDeniedHandler;
     private final SecurityUserService securityUserService;
-
-    @Autowired
-    public SecurityConfiguration(CustomWebAccessDeniedHandler customWebAccessDeniedHandler, SecurityUserService securityUserService) {
-        this.customWebAccessDeniedHandler = customWebAccessDeniedHandler;
-        this.securityUserService = securityUserService;
-    }
+    private final CustomOAuth2UserService customOAuth2UserService;
 
     public void configure(WebSecurity security) throws Exception {
         security.ignoring().antMatchers("/static/**");
@@ -80,7 +77,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                     .csrf().requireCsrfProtectionMatcher(new AntPathRequestMatcher("!/h2-console/**"))
                 .and()
-                    .authenticationProvider(authenticationProvider()).csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
+                    .authenticationProvider(authenticationProvider()).csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                .and()
+                    .oauth2Login()
+                    .userInfoEndpoint()
+                    .userService(customOAuth2UserService);
     }
 
     @Bean
