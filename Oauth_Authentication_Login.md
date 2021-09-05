@@ -24,12 +24,36 @@
         6. User는 Access Token을 이용하여 서비스 정보 요청
 
 ## CommonOAuth2Provider
+    - 네이버, 깃허브, 구글에 대한 oauth2 login 인증을 할 수 있도록 CommonOAuth2Provider가 자동으로 매핑해준다.
+    - GitLab은 지원을 하지 않기때문에 application-oauth.yml 파일을 아래와 같이 설정한다.
+        ```
+            spring:
+                security:
+                    oauth2:
+                        client:
+                            registration:
+                                gitlab:
+                                    client-id: ClientID
+                                    client-secret: ClientSecret
+                                    redirect-uri: '{baseUrl}/login/oauth2/code/gitlab'
+                                    authorization-grant-type: authorization_code
+                                    scope:
+                                        - api
+                                        - read_user
+                                        - read_repository
+                                        - write_repository
+                                    client-name: GitLab
+                            provider:
+                                gitlab:
+                                    authorization-uri: https://gitlab.com/oauth/authorize
+                                    token-uri: https://gitlab.com/oauth/token
+                                    user-info-uri: https://gitlab.com/api/v4/user
+                                    jwk-set-uri: https://gitlab.com/oauth/discovery/keys
+                                    user-name-attribute: username
+        ```
 
+## GitLab OAuth2 Login Error
+    - GitLab 인증 페이지인 ```https://gitlab.com/oauth/authorize```에 접근 시 ERR_SSL_PROTOCOL_ERROR 발생
+        - 참고 : https://forum.mendix.com/link/questions/93519
 
-## OAuth2를 이용한 로그인 및 회원가입
-    - 로그인 및 회원가입 과정
-        1. GitLab oauth2를 이용해 인증
-        2. response 데이터에 존재하는 email으로 중복 조회
-            2-1. 중복이 존재하지 않는다면 회원가입 페이지로 리다이렉트
-        3. 중복이 존재한다면 해당 User DB에 access token 값을 저장 후 메인 페이지로 리다이렉트
             
