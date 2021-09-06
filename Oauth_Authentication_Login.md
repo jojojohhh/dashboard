@@ -55,5 +55,8 @@
 ## GitLab OAuth2 Login Error
     - GitLab 인증 페이지인 ```https://gitlab.com/oauth/authorize```에 접근 시 ERR_SSL_PROTOCOL_ERROR 발생
         - 참고 : https://forum.mendix.com/link/questions/93519
+        - 앱 https 적용하여도 동일한 에러 발생
+            -> 원인 : authorization-uri를 http가 아닌 https로 접근하도록 하게 되어서 문제가 발생함.
+            -> 해결방법 : https를 http로 모두 변경
 
             

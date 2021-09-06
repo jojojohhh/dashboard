@@ -3,7 +3,6 @@ spring:
     import:
       - optional:classpath:/application-gitlab.yml
       - optional:classpath:/application-oauth.yml
-      - optional:classpath:/application-server.yml
   thymeleaf:
     mode: HTML
     encoding: UTF-8
