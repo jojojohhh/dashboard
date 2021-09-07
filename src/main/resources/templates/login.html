@@ -12,22 +12,6 @@
                     <div class="card card-signin my-5">
                         <div class="card-body">
                             <h5 class="card-title text-center">Sign In</h5>
-                            <form id="loginForm" class="form-signin" th:action="@{/login}" method="post">
-                                <div class="form-label-group">
-                                    <input type="text" name="email" id="inputEmail" class="form-control" placeholder="Email address"  autofocus>
-                                    <label for="inputEmail">Email address</label>
-                                </div>
-                                <div class="form-label-group">
-                                    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" >
-                                    <label for="inputPassword">Password</label>
-                                </div>
-                                <div id="loginFailMsg" th:text="${#request.getAttribute('errorMsg')}"></div>
-                                <button id="btn_login" class="btn btn-lg btn-primary btn-block text-uppercase">Sign in</button>
-                            </form>
-                            <a th:href="@{/join}">
-                                <button id="btn_join" class="btn btn-lg btn-primary btn-signup btn-block text-uppercase">Sign up</button>
-                            </a>
-                            <hr class="my-4">
                             <button id="btn-gitlab" class="btn btn-lg btn-google btn-block text-uppercase" onclick="location.href='/oauth2/authorization/gitlab'">
                                 <i class="fab fa-github"></i> Sign in with gitlab
                             </button>
@@ -39,34 +23,5 @@
 
         <!--  footer fragment  -->
         <th:block th:replace="fragment/footer :: footer"></th:block>
-
-        <script>
-            $(function () {
-                const errMsg = document.querySelector("#loginFailMsg");
-
-                if (errMsg.innerText !== "") {
-                    errMsg.style.display = "inline";
-                }
-
-                $(document.body).delegate(":input", "keyup", function (e) {
-                    if (e.which == 13)
-                        $("#btn_login").trigger("click");
-                });
-
-                const login_form = $("#loginForm")
-
-                $("#btn_login").on("click", function () {
-                    const email = $("input[name='email']").val(), password = $("input[name='password']").val();
-                    if (email == "") {
-                        alert("이 메일을 입력하세요.");
-                        return false;
-                    } else if (password == "") {
-                        alert("비밀번호를 입력하세요.");
-                        return false;
-                    }
-                    login_form.submit();
-                });
-            });
-        </script>
     </body>
 </html>
