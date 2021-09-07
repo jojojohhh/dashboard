@@ -29,10 +29,10 @@ public class CustomWebAccessDeniedHandler implements AccessDeniedHandler {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             if (auth != null) {
                 SecurityUser securityUser = (SecurityUser) auth.getPrincipal();
-                Set<UserRole.RoleType> roleTypes = securityUser.getRoleType();
-                if (!roleTypes.isEmpty()) {
+                UserRole userRole = securityUser.getRoleType();
+                if (userRole == null) {
                     request.setAttribute("msg", "접근권한이 없는 사용자입니다.");
-                    if (roleTypes.contains(UserRole.RoleType.USER)) {
+                    if (userRole.getKey().equals(UserRole.USER.getKey())) {
                         request.setAttribute("nextPage", "/home");
                     }
                 }
@@ -42,6 +42,7 @@ public class CustomWebAccessDeniedHandler implements AccessDeniedHandler {
                 response.setStatus(HttpStatus.UNAUTHORIZED.value());
                 SecurityContextHolder.clearContext();
             }
+            logger.error(accessDeniedException.getClass().getCanonicalName());
         } else {
             logger.info(accessDeniedException.getClass().getCanonicalName());
         }
