@@ -1,16 +1,11 @@
 package com.swlab.dashboard.model.user;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.swlab.dashboard.model.BaseEntity;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @Getter @Setter
 @Entity
@@ -22,14 +17,8 @@ public class User extends BaseEntity {
     @Column(length = 100, nullable = false, unique = true)
     private String email;
 
-    @Column(length = 150, nullable = false)
-    private String password;
-
     @Column(length = 20, nullable = false)
     private String name;
-
-    @Column(length = 11, nullable = false)
-    private String phoneNo;
 
     @Column
     private String picture;
@@ -40,11 +29,9 @@ public class User extends BaseEntity {
 
 
     @Builder
-    public User(String email, String password, String name, String phoneNo, String picture, UserRole userRole) {
+    public User(String email, String name, String picture, UserRole userRole) {
         this.email = email;
-        this.password = password;
         this.name = name;
-        this.phoneNo = phoneNo;
         this.picture = picture;
         this.userRole = userRole;
     }

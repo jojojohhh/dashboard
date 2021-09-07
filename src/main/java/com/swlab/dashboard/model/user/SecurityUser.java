@@ -20,9 +20,7 @@ public class SecurityUser extends User implements UserDetails {
         super();
         setId(user.getId());
         setEmail(user.getEmail());
-        setPassword(user.getPassword());
         setName(user.getName());
-        setPhoneNo(user.getPhoneNo());
         setDel(user.isDel());
         setUserRole(user.getUserRole());
         this.accountNonExpired = true;
@@ -40,6 +38,11 @@ public class SecurityUser extends User implements UserDetails {
         Set<GrantedAuthority> auth = new HashSet<>();
         auth.add(new SimpleGrantedAuthority(getUserRole().getKey()));
         return auth;
+    }
+
+    @Override
+    public String getPassword() {
+        return null;
     }
 
     @Override

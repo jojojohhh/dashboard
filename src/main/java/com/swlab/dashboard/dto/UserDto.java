@@ -14,21 +14,22 @@ public class UserDto {
     private String password;
     private String name;
     private String phoneNo;
+    private String picture;
 
     public User toEntity() {
         return User.builder()
                 .email(email)
-                .password(password)
                 .name(name)
-                .phoneNo(phoneNo)
+                .picture(picture)
                 .build();
     }
 
     @Builder
-    public UserDto(String email, String password, String name, String phoneNo) {
+    public UserDto(String email, String password, String name, String phoneNo, String picture) {
         this.email = email;
         this.password = password;
         this.name = name;
         this.phoneNo = phoneNo;
+        this.picture = picture;
     }
 }
