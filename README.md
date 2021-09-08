@@ -35,6 +35,7 @@
       - 각 종 예외에 대한 응답 구현
   8. 데이터베이스
       - MYSQL
+      - 스키마 적용
   9. 사용할 무료 대시보드 수정 및 적용하기
       - 출처: [Admin-LTE](https://github.com/ColorlibHQ/AdminLTE)
       - 차트는 Chart.js 사용
