@@ -1,5 +1,6 @@
 package com.swlab.dashboard.controller;
 
+import com.swlab.dashboard.config.properties.GitlabProperties;
 import com.swlab.dashboard.service.GitLabService;
 
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,8 @@ import java.util.stream.Collectors;
 public class HomeController {
 
     private final GitLabService gitLabService;
+
+    private final GitlabProperties gitlabProperties;
 
     private final SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -79,6 +82,7 @@ public class HomeController {
         model.addAttribute("commits", commits.stream().limit(3).collect(Collectors.toList()));
         model.addAttribute("issuesCnt", issues.size());
         model.addAttribute("openedIssuesCnt", issues.stream().filter(issue -> issue.getState().equals(Constants.IssueState.OPENED)).collect(Collectors.toList()).size());
+        model.addAttribute("baseUrl", gitlabProperties.getUrl());
 
         return "pages/projects/project-detail";
     }
