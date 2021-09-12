@@ -2,6 +2,7 @@ package com.swlab.dashboard.config.security.oauth.dto;
 
 import com.swlab.dashboard.model.user.User;
 import com.swlab.dashboard.model.user.UserRole;
+
 import lombok.Builder;
 import lombok.Getter;
 

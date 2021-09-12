@@ -6,13 +6,11 @@ import com.swlab.dashboard.service.GitLabService;
 import lombok.RequiredArgsConstructor;
 
 import org.gitlab4j.api.Constants;
-import org.gitlab4j.api.GitLabApi;
 import org.gitlab4j.api.GitLabApiException;
 import org.gitlab4j.api.models.Commit;
 import org.gitlab4j.api.models.Issue;
 import org.gitlab4j.api.models.Project;
 
-import org.springframework.security.config.oauth2.client.CommonOAuth2Provider;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
