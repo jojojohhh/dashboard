@@ -23,6 +23,9 @@ public class User extends BaseEntity {
     @Column
     private String picture;
 
+    @Column
+    String gitLabAccessToken;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private UserRole userRole;
@@ -36,9 +39,15 @@ public class User extends BaseEntity {
         this.userRole = userRole;
     }
 
-    public User update(String name, String picture) {
+    public User update(String name, String picture, String gitLabAccessToken) {
         this.name = name;
         this.picture = picture;
+        this.gitLabAccessToken = gitLabAccessToken;
+        return this;
+    }
+
+    public User withGitLabAccessToken(String gitLabAccessToken) {
+        this.gitLabAccessToken = gitLabAccessToken;
         return this;
     }
 

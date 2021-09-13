@@ -33,14 +33,6 @@ public class LoginController {
         return "login";
     }
 
-    /*
-        GitLab 인증 결과 받는 API
-     */
-    @GetMapping("/login/oauth2/code/gitlab")
-    public void gitLabAuthCallback() {
-        //https://example.com/oauth/redirect?code=1234567890&state=STATE
-    }
-
     @GetMapping("/join")
     public String getJoin() {
         return "join";
