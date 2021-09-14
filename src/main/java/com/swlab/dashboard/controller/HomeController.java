@@ -87,6 +87,7 @@ public class HomeController {
 
     @GetMapping("/contacts")
     public String getContacts() {
+
         return "pages/projects/contacts";
     }
 }

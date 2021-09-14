@@ -86,6 +86,10 @@ public class ApiController {
 
     @GetMapping("/gitlab/group")
     public ApiResult<List<Group>> getGitLabGroup() throws GitLabApiException {
+        List<List<Member>> allMemberInGroup = new ArrayList<>();
+        for (Group group : gitLabService.getGitLabApi().getGroupApi().getGroups()) {
+            gitLabService.getGitLabApi().getGroupApi().getAllMembers(group.getId());
+        }
         return success(gitLabService.getGitLabApi().getGroupApi().getGroups());
     }
 
