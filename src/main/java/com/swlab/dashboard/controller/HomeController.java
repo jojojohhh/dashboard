@@ -86,8 +86,9 @@ public class HomeController {
     }
 
     @GetMapping("/contacts")
-    public String getContacts() {
-
+    public String getContacts(Model model) throws GitLabApiException {
+        model.addAttribute("baseUrl", gitlabProperties.getUrl());
+        model.addAttribute("userList", gitLabService.getGitLabApi().getUserApi().getUsers());
         return "pages/projects/contacts";
     }
 }
