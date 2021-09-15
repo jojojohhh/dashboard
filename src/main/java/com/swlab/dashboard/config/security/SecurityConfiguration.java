@@ -4,10 +4,12 @@ import com.swlab.dashboard.config.security.handler.CustomAuthenticationFailureHa
 import com.swlab.dashboard.config.security.handler.CustomWebAccessDeniedHandler;
 import com.swlab.dashboard.config.security.oauth.CustomOAuth2UserService;
 import com.swlab.dashboard.service.SecurityUserService;
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

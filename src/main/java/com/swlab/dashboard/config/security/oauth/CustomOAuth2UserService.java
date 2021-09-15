@@ -11,6 +11,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
+import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -37,7 +38,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
         OAuthAttributes oAuthAttributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
 
-        User user = saveOrUpdate(oAuthAttributes);
+        User user = saveOrUpdate(oAuthAttributes, userRequest.getAccessToken());
 
         httpSession.setAttribute("user", new SessionUser(user));
 
@@ -48,10 +49,10 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         );
     }
 
-    private User saveOrUpdate(OAuthAttributes oAuthAttributes) {
+    private User saveOrUpdate(OAuthAttributes oAuthAttributes, OAuth2AccessToken accessToken) {
         return userRepository.save(
                 userRepository.findByEmail(oAuthAttributes.getEmail())
-                        .map(entity -> entity.update(oAuthAttributes.getName(), oAuthAttributes.getPicture()))
-                        .orElse(oAuthAttributes.toEntity()));
+                        .map(entity -> entity.update(oAuthAttributes.getName(), oAuthAttributes.getPicture(), accessToken.getTokenValue()))
+                        .orElse(oAuthAttributes.toEntity().withGitLabAccessToken(accessToken.getTokenValue())));
     }
 }

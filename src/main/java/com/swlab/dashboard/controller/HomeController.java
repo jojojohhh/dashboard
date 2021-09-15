@@ -1,17 +1,16 @@
 package com.swlab.dashboard.controller;
 
+import com.swlab.dashboard.config.properties.GitlabProperties;
 import com.swlab.dashboard.service.GitLabService;
 
 import lombok.RequiredArgsConstructor;
 
 import org.gitlab4j.api.Constants;
-import org.gitlab4j.api.GitLabApi;
 import org.gitlab4j.api.GitLabApiException;
 import org.gitlab4j.api.models.Commit;
 import org.gitlab4j.api.models.Issue;
 import org.gitlab4j.api.models.Project;
 
-import org.springframework.security.config.oauth2.client.CommonOAuth2Provider;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +28,8 @@ import java.util.stream.Collectors;
 public class HomeController {
 
     private final GitLabService gitLabService;
+
+    private final GitlabProperties gitlabProperties;
 
     private final SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -79,12 +80,15 @@ public class HomeController {
         model.addAttribute("commits", commits.stream().limit(3).collect(Collectors.toList()));
         model.addAttribute("issuesCnt", issues.size());
         model.addAttribute("openedIssuesCnt", issues.stream().filter(issue -> issue.getState().equals(Constants.IssueState.OPENED)).collect(Collectors.toList()).size());
+        model.addAttribute("baseUrl", gitlabProperties.getUrl());
 
         return "pages/projects/project-detail";
     }
 
     @GetMapping("/contacts")
-    public String getContacts() {
+    public String getContacts(Model model) throws GitLabApiException {
+        model.addAttribute("baseUrl", gitlabProperties.getUrl());
+        model.addAttribute("userList", gitLabService.getGitLabApi().getUserApi().getUsers());
         return "pages/projects/contacts";
     }
 }

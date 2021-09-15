@@ -99,7 +99,7 @@
                     <p class="text-sm">Project Leader
                       <b class="d-block" th:text="${project.getNamespace().getName()}"></b>
                     </p>
-                    <p th:href="${project.getWebUrl()}">Go-To Repository</p>
+                    <a th:href="|${baseUrl}/${project.getNamespace().getName()}/${project.getName()}|">Go-To Repository</a>
                   </div>
                 </div>
               </div>
