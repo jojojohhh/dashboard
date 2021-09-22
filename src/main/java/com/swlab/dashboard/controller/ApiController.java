@@ -1,6 +1,5 @@
 package com.swlab.dashboard.controller;
 
-import com.swlab.dashboard.dto.UserDto;
 import com.swlab.dashboard.service.GitLabService;
 import com.swlab.dashboard.utils.ApiResult;
 
@@ -74,9 +73,9 @@ public class ApiController {
         return success(gitLabService.getMonthlyCommitCount());
     }
 
-    @GetMapping("/gitlab/issue")
-    public ApiResult<List<Issue>> getGitLabIssue(Principal principal) throws GitLabApiException {
-        return success(gitLabService.getGitLabApi().getIssuesApi().getIssues());
+    @GetMapping("/gitlab/project/{id}/issues-status")
+    public ApiResult<Map<String, Integer>> getGitLabIssueStatusByProject(@PathVariable String id) throws GitLabApiException {
+        return success(gitLabService.getIssueStatusCount(id));
     }
 
     @GetMapping("/gitlab/project/{id}/issues")

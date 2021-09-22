@@ -113,12 +113,10 @@
                   <div class="card-header border-0">
                     <h3 class="card-title">Issue Status</h3>
                     <div class="card-tools">
-                      <a href="#" class="btn btn-sm btn-tool">
-                        <i class="fas fa-download"></i>
-                      </a>
-                      <a href="#" class="btn btn-sm btn-tool">
-                        <i class="fas fa-bars"></i>
-                      </a>
+                      <label>프로젝트</label>
+                      <select class="form-control" id="project-select" onchange="changeSelect(this.value)">
+                        <option th:each="project, index : ${projects}" th:value="${project.getId()}" th:text="${project.getName()}" th:selected="${index.index} == 0"></option>
+                      </select>
                     </div>
                   </div>
                   <div class="card-body">
@@ -301,6 +299,20 @@
           }
         });
       });
+
+      function changeSelect(id) {
+        console.log(id)
+        $.ajax({
+          type : 'GET',
+          url : '/api/v1/gitlab/project/'+ id +'issues-status',
+          success :function (data) {
+
+          },
+          error : function (err) {
+            alert(err);
+          }
+        })
+      }
     </script>
   </body>
 </html>

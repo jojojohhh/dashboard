@@ -37,6 +37,7 @@ public class HomeController {
     public String getDashboard(Model model) throws GitLabApiException {
         model.addAttribute("activeProjects", gitLabService.getGitLabApi().getProjectApi().getProjects(1, 5));
         model.addAttribute("monthlyCommitCnt", gitLabService.getMonthlyCommitCount());
+        model.addAttribute("projects", gitLabService.getGitLabApi().getProjectApi().getProjects());
         return "index";
     }
 

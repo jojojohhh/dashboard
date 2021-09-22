@@ -7,6 +7,7 @@ import com.swlab.dashboard.model.user.User;
 import org.gitlab4j.api.GitLabApi;
 import org.gitlab4j.api.GitLabApiException;
 import org.gitlab4j.api.models.Commit;
+import org.gitlab4j.api.models.Issue;
 import org.gitlab4j.api.models.Project;
 
 import org.springframework.security.config.oauth2.client.CommonOAuth2Provider;
@@ -81,6 +82,19 @@ public class GitLabService {
             calendar.add(Calendar.DATE, -1);
         }
         return createdProjectsCnt;
+    }
+
+    public Map<String, Integer> getIssueStatusCount(String id) throws GitLabApiException {
+        gitLabApi = getGitLabApi();
+
+        List<Issue> issues = gitLabApi.getIssuesApi().getIssues(id);
+
+        Map<String, Integer> res = new HashMap<>();
+
+        int openCount = (int) issues.stream().filter(issue -> issue.getClosedAt().equals(null)).count();
+        res.put("open", openCount);
+        res.put("closed", issues.size() - openCount);
+        return res;
     }
 
     public static Calendar getMidnightCalendar(Date date) {
