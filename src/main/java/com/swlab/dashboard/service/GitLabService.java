@@ -93,6 +93,7 @@ public class GitLabService {
 
         int openCnt = (int) issues.stream().filter(issue -> issue.getClosedBy() == null).count();
 
+        res.put("total", issues.size());
         res.put("open", openCnt);
         res.put("closed", issues.size() - openCnt);
         return res;
