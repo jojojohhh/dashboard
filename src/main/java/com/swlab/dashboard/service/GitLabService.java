@@ -91,9 +91,10 @@ public class GitLabService {
 
         Map<String, Integer> res = new HashMap<>();
 
-        int openCount = (int) issues.stream().filter(issue -> issue.getClosedAt().equals(null)).count();
-        res.put("open", openCount);
-        res.put("closed", issues.size() - openCount);
+        int openCnt = (int) issues.stream().filter(issue -> issue.getClosedBy() == null).count();
+
+        res.put("open", openCnt);
+        res.put("closed", issues.size() - openCnt);
         return res;
     }
 
