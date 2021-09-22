@@ -306,11 +306,10 @@
           type : 'GET',
           url : '/api/v1/gitlab/project/'+ id +'/issues-status',
           success :function (data) {
-            const total = $('#issues-total')
-            const open = $('#issues-open')
-            const closed = $('#issues-closed')
-            console.log(data.response.open)
-            console.log(data.response.closed)
+            const html = '<i class="ion ion-android-arrow-up text-success"></i>';
+            $('#issues-total').html(html + data.response.total)
+            $('#issues-open').html(html + data.response.open)
+            $('#issues-closed').html(html + data.response.closed)
           },
           error : function (err) {
             alert(err);
