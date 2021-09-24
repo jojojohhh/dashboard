@@ -4,8 +4,9 @@
 ## 할 일
   1. Spring Security5를 이용한 로그인 처리
       - _csrf.token 적용
-  2. 로그인 form 만들기
-  3. 회원가입 기능 추가
+      - gitlab oauth2를 이용한 로그인 처리
+  2. ~로그인 form 만들기~
+  3. ~회원가입 기능 추가~
       - 회원가입 form에서 post요청시 Controller에서 받는 데이터의 ```content-type: 'application/x-www-form-urlencoded;set-UTF-8'```
       - Controller에서 ```@RequestBody```로 데이터를 dto에 매핑 시키기 위해서는 ```content-type: 'application/json'``` 이어야 함
       - ```content-type: 'application/json'```으로 전송 시키기 위해서는 jQuery를 사용해 ajax 통신이 필요 
