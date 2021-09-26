@@ -34,12 +34,14 @@
       - 각 차트에 맞는 데이터를 불러오기 위한 GitLab API 호출시에 유저 id 또는 프로젝트 id 와 같은 정보가 필요함
         - 각 유저가 속해있는 프로젝트에 대한 커밋 수를 조회 하기 위해서는 GitLab4J API에서 제공하는 getUserProjects라는 메서드를 호출하여 조회가능하나 유저 id와 ProjectFilter를 매개변수로 받기 때문에 ProjectFilter를 어떻게 사용하며, 어떻게 필터링 할 것인지 정해야함
         - GitLab4J API를 사용하기 보다 참고하여 필요한 API를 직접 요청하는것도 고려해보아야함
-  7. 예외처리
+  7. 구글 캘린더 api
+      - oauth 인증을 통한 google calendar api
+  8. 예외처리
       - 각 종 예외에 대한 응답 구현
-  8. 데이터베이스
+  9. 데이터베이스
       - MYSQL
       - 스키마 적용
-  9. 사용할 무료 대시보드 수정 및 적용하기
+  10. 사용할 무료 대시보드 수정 및 적용하기
       - 출처: [Admin-LTE](https://github.com/ColorlibHQ/AdminLTE)
       - 차트는 Chart.js 사용
       - 각 데이터들을 차트로 출력하기 위해서는 Controller 에서 데이터를 넘겨주는것, 자바스크립트 ajax를 사용하여 API를 호출해 JSON 데이터를 가져오는 것 두 가지 방법이 있다.
