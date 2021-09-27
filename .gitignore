@@ -40,3 +40,4 @@ out/
 /src/main/resources/application-gitlab.yml
 /src/main/resources/application-oauth.yml
 /src/main/resources/application-server.yml
+/src/main/resources/credentials.json

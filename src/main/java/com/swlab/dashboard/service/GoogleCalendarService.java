@@ -9,12 +9,11 @@ import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.client.util.DateTime;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.CalendarScopes;
-import com.google.api.services.calendar.model.Event;
-import com.google.api.services.calendar.model.Events;
+
+import org.springframework.stereotype.Service;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -24,6 +23,7 @@ import java.security.GeneralSecurityException;
 import java.util.Collections;
 import java.util.List;
 
+@Service
 public class GoogleCalendarService {
 
     private static final String APPLICATION_NAME = "Google Calendar API Java Quickstart";
@@ -57,37 +57,15 @@ public class GoogleCalendarService {
                 .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(TOKENS_DIRECTORY_PATH)))
                 .setAccessType("offline")
                 .build();
-        LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(8888).build();
+//        LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(8000).build();
+        LocalServerReceiver receiver = new LocalServerReceiver();
         return new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
     }
 
-    public static void main(String... args) throws IOException, GeneralSecurityException {
-        // Build a new authorized API client service.
+    public Calendar getCalendar() throws GeneralSecurityException, IOException {
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-        Calendar service = new Calendar.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
+        return new Calendar.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
                 .setApplicationName(APPLICATION_NAME)
                 .build();
-
-        // List the next 10 events from the primary calendar.
-        DateTime now = new DateTime(System.currentTimeMillis());
-        Events events = service.events().list("primary")
-                .setMaxResults(10)
-                .setTimeMin(now)
-                .setOrderBy("startTime")
-                .setSingleEvents(true)
-                .execute();
-        List<Event> items = events.getItems();
-        if (items.isEmpty()) {
-            System.out.println("No upcoming events found.");
-        } else {
-            System.out.println("Upcoming events");
-            for (Event event : items) {
-                DateTime start = event.getStart().getDateTime();
-                if (start == null) {
-                    start = event.getStart().getDate();
-                }
-                System.out.printf("%s (%s)\n", event.getSummary(), start);
-            }
-        }
     }
 }

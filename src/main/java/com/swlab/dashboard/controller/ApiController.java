@@ -1,6 +1,12 @@
 package com.swlab.dashboard.controller;
 
+import com.google.api.client.util.DateTime;
+import com.google.api.services.calendar.Calendar;
+import com.google.api.services.calendar.model.Event;
+import com.google.api.services.calendar.model.Events;
+
 import com.swlab.dashboard.service.GitLabService;
+import com.swlab.dashboard.service.GoogleCalendarService;
 import com.swlab.dashboard.utils.ApiResult;
 
 import lombok.RequiredArgsConstructor;
@@ -11,6 +17,8 @@ import org.gitlab4j.api.models.*;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.security.Principal;
 
 import java.util.ArrayList;
@@ -25,6 +33,7 @@ import static com.swlab.dashboard.utils.ApiUtils.success;
 public class ApiController {
 
     private final GitLabService gitLabService;
+    private final GoogleCalendarService googleCalendarService;
 
     @GetMapping("/gitlab/version")
     public ApiResult<GitLabApi.ApiVersion> getGitLabApiVersion() {
@@ -95,5 +104,18 @@ public class ApiController {
     @GetMapping("/gitlab/userinfo")
     public ApiResult<User> getGitLabUserInfo(Principal principal) throws GitLabApiException {
         return success(gitLabService.getGitLabApi().getUserApi().findUsers(principal.getName()).get(0));
+    }
+
+    @GetMapping("/google/calendar")
+    public ApiResult<List<Event>> getGoogleCalendar() throws GeneralSecurityException, IOException {
+        Calendar service = googleCalendarService.getCalendar();
+        DateTime now = new DateTime(System.currentTimeMillis());
+        Events events = service.events().list("primary")
+                .setMaxResults(10)
+                .setTimeMin(now)
+                .setOrderBy("startTime")
+                .setSingleEvents(true)
+                .execute();
+        return success(events.getItems());
     }
 }
