@@ -2,9 +2,9 @@ package com.swlab.dashboard.controller;
 
 import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.Calendar;
+
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.Events;
-
 import com.swlab.dashboard.service.GitLabService;
 import com.swlab.dashboard.service.GoogleCalendarService;
 import com.swlab.dashboard.utils.ApiResult;
@@ -110,7 +110,7 @@ public class ApiController {
     public ApiResult<List<Event>> getGoogleCalendar() throws GeneralSecurityException, IOException {
         Calendar service = googleCalendarService.getCalendar();
         DateTime now = new DateTime(System.currentTimeMillis());
-        Events events = service.events().list("primary")
+        Events events = service.events().list("kslabcalendar@gmail.com")
                 .setMaxResults(10)
                 .setTimeMin(now)
                 .setOrderBy("startTime")
