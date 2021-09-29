@@ -3,7 +3,6 @@ package com.swlab.dashboard.controller;
 import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.Calendar;
 
-import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.Events;
 import com.swlab.dashboard.service.GitLabService;
 import com.swlab.dashboard.service.GoogleCalendarService;
@@ -106,16 +105,10 @@ public class ApiController {
         return success(gitLabService.getGitLabApi().getUserApi().findUsers(principal.getName()).get(0));
     }
 
-    @GetMapping("/google/calendar")
-    public ApiResult<List<Event>> getGoogleCalendar() throws GeneralSecurityException, IOException {
+    @GetMapping("/google/calendar/events")
+    public ApiResult<Events> getGoogleCalendarEvents() throws GeneralSecurityException, IOException {
         Calendar service = googleCalendarService.getCalendar();
-        DateTime now = new DateTime(System.currentTimeMillis());
-        Events events = service.events().list("kslabcalendar@gmail.com")
-                .setMaxResults(10)
-                .setTimeMin(now)
-                .setOrderBy("startTime")
-                .setSingleEvents(true)
-                .execute();
-        return success(events.getItems());
+        return success(service.events().list("niuspmd1mlngu374b6mv1g3ec0@group.calendar.google.com")
+                .execute());
     }
 }
