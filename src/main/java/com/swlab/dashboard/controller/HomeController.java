@@ -1,6 +1,7 @@
 package com.swlab.dashboard.controller;
 
 import com.swlab.dashboard.config.properties.GitlabProperties;
+import com.swlab.dashboard.config.properties.GoogleProperties;
 import com.swlab.dashboard.service.GitLabService;
 
 import lombok.RequiredArgsConstructor;
@@ -30,6 +31,7 @@ public class HomeController {
     private final GitLabService gitLabService;
 
     private final GitlabProperties gitlabProperties;
+    private final GoogleProperties googleProperties;
 
     private final SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -42,7 +44,9 @@ public class HomeController {
     }
 
     @GetMapping("/calendar")
-    public String getCalendar() {
+    public String getCalendar(Model model) {
+        model.addAttribute("googleApiKey", googleProperties.getApiKey());
+        model.addAttribute("googleCalendarId", googleProperties.getCalendarId());
         return "pages/calendar";
     }
 
