@@ -42,3 +42,5 @@ out/
 /src/main/resources/application-server.yml
 /src/main/resources/credentials.json
 /src/main/resources/calendar-credentials.json
+/src/main/resources/application-googleApi.yml
+/src/main/resources/application-google.yml
