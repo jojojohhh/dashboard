@@ -35,7 +35,8 @@
         - 각 유저가 속해있는 프로젝트에 대한 커밋 수를 조회 하기 위해서는 GitLab4J API에서 제공하는 getUserProjects라는 메서드를 호출하여 조회가능하나 유저 id와 ProjectFilter를 매개변수로 받기 때문에 ProjectFilter를 어떻게 사용하며, 어떻게 필터링 할 것인지 정해야함
         - GitLab4J API를 사용하기 보다 참고하여 필요한 API를 직접 요청하는것도 고려해보아야함
   7. 구글 캘린더 api
-      - oauth 인증을 통한 google calendar api
+      - oauth 인증을 통한 google calendar api 조회
+      - fullcalendar.js 활용
   8. 예외처리
       - 각 종 예외에 대한 응답 구현
   9. 데이터베이스
