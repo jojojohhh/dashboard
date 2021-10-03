@@ -49,6 +49,18 @@
           <!-- /.col -->
         </div>
         <!-- /.row -->
+        <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <p></p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
@@ -91,7 +103,13 @@
       themeSystem: 'bootstrap',
       eventSources: [{
         googleCalendarId: googleCalendarId
-      }]
+      }],
+      eventClick: function (info) {
+        info.jsEvent.preventDefault();
+        console.log(info)
+        $("#successModal").modal("show");
+        $("#successModal .modal-body p").text(info.title);
+      }
     })
 
     calendar.render();
