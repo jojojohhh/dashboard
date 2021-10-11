@@ -39,10 +39,7 @@
       - fullcalendar.js 활용
   8. 예외처리
       - 각 종 예외에 대한 응답 구현
-  9. 데이터베이스
-      - MYSQL
-      - 스키마 적용
-  10. 사용할 무료 대시보드 수정 및 적용하기
+  9. 사용할 무료 대시보드 수정 및 적용하기
       - 출처: [Admin-LTE](https://github.com/ColorlibHQ/AdminLTE)
       - 차트는 Chart.js 사용
       - 각 데이터들을 차트로 출력하기 위해서는 Controller 에서 데이터를 넘겨주는것, 자바스크립트 ajax를 사용하여 API를 호출해 JSON 데이터를 가져오는 것 두 가지 방법이 있다.
