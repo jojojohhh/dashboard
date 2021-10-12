@@ -1,6 +1,5 @@
 package com.swlab.dashboard.controller;
 
-import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.Calendar;
 
 import com.google.api.services.calendar.model.Events;
@@ -39,7 +38,7 @@ public class ApiController {
         return success(gitLabService.getGitLabApi().getApiVersion());
     }
 
-    @GetMapping("/gitlab/users{email}")
+    @GetMapping("/gitlab/user/{email}")
     public ApiResult<List<User>> getGitLabUsersByEmail(@PathVariable String email) throws GitLabApiException {
         return success(gitLabService.getGitLabApi().getUserApi().findUsers(email));
     }
