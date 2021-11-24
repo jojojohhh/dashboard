@@ -45,6 +45,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setUserDetailsService(securityUserService);
+        provider.setPasswordEncoder(passwordEncoder());
+        return provider;
+    }
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
@@ -81,13 +89,5 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                     .loginPage("/login")
                     .defaultSuccessUrl("/home", true);
-    }
-
-    @Bean
-    public DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setUserDetailsService(securityUserService);
-        provider.setPasswordEncoder(passwordEncoder());
-        return provider;
     }
 }
